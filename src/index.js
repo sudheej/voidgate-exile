@@ -27,8 +27,8 @@ const config = {
     type: Phaser.AUTO,
     backgroundColor: '#000000',
     parent: 'game',
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     scene: Main
