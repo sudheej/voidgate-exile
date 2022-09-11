@@ -16,9 +16,6 @@ class Main extends Phaser.Scene
       
     create ()
     {
-        const tile = new Tile(this);
-        tile.createTile('start_path');
-        console.log(tile.TileProperties);
         const map = new Map(this);
         map.MappingData = plainmap;
         map.createMap(100,100);
@@ -28,9 +25,12 @@ class Main extends Phaser.Scene
 
 const config = {
     type: Phaser.AUTO,
-    parent: 'phaser-example',
+    backgroundColor: '#000000',
+    parent: 'game',
     width: 800,
     height: 600,
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
     scene: Main
 };
 
