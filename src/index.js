@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Tile from './components/Tile'
 import Map from './components/Map'
+import Weapon from './components/Weapon';
 import plainmap from './assets/maps/plainfield.json'
 class Main extends Phaser.Scene
 {
@@ -16,9 +17,25 @@ class Main extends Phaser.Scene
       
     create ()
     {
+
+        
+    let WeaponProperties = {
+        _id: "weapontimele",
+        x: 875,
+        y: 210,
+        height: 25,
+        width: 25,
+        type: "plainTile"
+    };
+    
+
         const map = new Map(this);
         map.MappingData = plainmap;
         map.createMap(100,100);
+        const weapon = new Weapon(this);
+        console.log(weapon)
+        weapon.createTile(WeaponProperties)
+
 
     }
 }
