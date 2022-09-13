@@ -1,28 +1,28 @@
 import Phaser from 'phaser'
 
 
-export default function Tile(scene) {
+export default function Tile(scene, tileproperties) {
 
     this.scene = scene
-
+    this.rectangle = new Phaser.GameObjects.Rectangle(this.scene, tileproperties.x, tileproperties.y, tileproperties.width, tileproperties.height, 0x80dfff);
+    this.tileproperties = tileproperties
 
 
 }
 
-Tile.prototype.createTile = function (TileProperties) {
-    let rectangle = new Phaser.GameObjects.Rectangle(this.scene, TileProperties.x, TileProperties.y, TileProperties.width, TileProperties.height, 0x80dfff);
-    rectangle.setStrokeStyle(1);
+Tile.prototype.createTile = function () {
+    this.rectangle.setStrokeStyle(1);
     let entryGradient = new Phaser.GameObjects.Graphics(this.scene);
-    if (TileProperties.type === "path") {
-        rectangle.setFillStyle(0x000000)
+    if (this.tileproperties.type === "path") {
+        this.rectangle.setFillStyle(0x000000)
     }
-    else if (TileProperties.type === "start_path") {
-        rectangle.fillColor = 0x000000
+    else if (this.tileproperties.type === "start_path") {
+        this.rectangle.fillColor = 0x000000
         entryGradient.fillGradientStyle(0x7CFC00, 0xADFF2F, 0x000000, 0x000000, 1);
-        entryGradient.fillRect(TileProperties.x - 12, TileProperties.y - 10, TileProperties.width, TileProperties.height)
+        entryGradient.fillRect(this.tileproperties.x - 12, this.tileproperties.y - 10, this.tileproperties.width, this.tileproperties.height)
         this.scene.add.existing(entryGradient)
     }
     else {
-        this.scene.add.existing(rectangle)
+        this.scene.add.existing(this.rectangle)
     }
 }

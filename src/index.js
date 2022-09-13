@@ -32,9 +32,9 @@ class Main extends Phaser.Scene
         const map = new Map(this);
         map.MappingData = plainmap;
         map.createMap(100,100);
-        const weapon = new Weapon(this);
+        const weapon = new Weapon(this,WeaponProperties);
         console.log(weapon)
-        weapon.createTile(WeaponProperties)
+        weapon.createTile()
 
 
     }

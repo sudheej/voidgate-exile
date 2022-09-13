@@ -18,8 +18,8 @@ export default function Map(scene) {
                 const TileProperties = {
                     ...MappingData[vi][hi]
                 }
-                const tile = new Tile(this.scene)
-                tile.createTile(TileProperties)                
+                const tile = new Tile(this.scene,TileProperties)
+                tile.createTile()                
             }
         }
     }
