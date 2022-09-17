@@ -3,6 +3,9 @@ import Tile from './components/Tile'
 import Map from './components/Map'
 import Weapon from './components/Weapon';
 import plainmap from './assets/maps/plainfield.json'
+import { weaponarray } from './state/WeaponArray';
+
+
 class Main extends Phaser.Scene
 {
     constructor ()
@@ -12,30 +15,37 @@ class Main extends Phaser.Scene
 
     preload ()
     {
-       
+    
     }
       
     create ()
     {
 
         
-    let WeaponProperties = {
-        _id: "weapontimele",
-        x: 875,
-        y: 210,
-        height: 25,
-        width: 25,
-        type: "plainTile"
-    };
-    
 
+        this.input.setDefaultCursor('url(assets/cursors/cur.cur), cursor')
         const map = new Map(this);
         map.MappingData = plainmap;
         map.createMap(100,100);
-        const weapon = new Weapon(this,WeaponProperties);
-        console.log(weapon)
-        weapon.createTile()
 
+
+            let WeaponProperties = {
+                _id: "weapontimele",
+                x: 875,
+                y: 210,
+                height: 25,
+                width: 25,
+                type: "basic_gun"
+            };
+            
+            const weapon = new Weapon(this,WeaponProperties);
+                        
+            weapon.createTile()
+
+            weapon.rectangle.setInteractive();
+            weapon.rectangle.on('pointerdown', () => { console.log('pointerover'); weaponarray.selectedproperty = weapon});
+      
+           
 
     }
 }

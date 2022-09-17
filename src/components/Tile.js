@@ -22,6 +22,10 @@ Tile.prototype.createTile = function () {
         entryGradient.fillRect(this.tileproperties.x - 12, this.tileproperties.y - 10, this.tileproperties.width, this.tileproperties.height)
         this.scene.add.existing(entryGradient)
     }
+    else if (this.tileproperties.type === "basic_gun") {
+        this.rectangle.fillColor = 0x328720
+        this.scene.add.existing(this.rectangle)
+    }
     else {
         this.scene.add.existing(this.rectangle)
     }
