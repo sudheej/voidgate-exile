@@ -5,6 +5,7 @@ export default function Tile(scene, tileproperties) {
 
     this.scene = scene
     this.rectangle = new Phaser.GameObjects.Rectangle(this.scene, tileproperties.x, tileproperties.y, tileproperties.width, tileproperties.height, 0x80dfff);
+    this.layer = new Phaser.GameObjects.Layer(this.scene);
     this.tileproperties = tileproperties
 
 
@@ -24,7 +25,7 @@ Tile.prototype.createTile = function () {
     }
     else if (this.tileproperties.type === "basic_gun") {
         this.rectangle.fillColor = 0x328720
-        this.scene.add.existing(this.rectangle)
+       
     }
     else {
         this.scene.add.existing(this.rectangle)

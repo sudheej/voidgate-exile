@@ -1,10 +1,35 @@
-# Phaser 3 Webpack Project Template
 
-A Phaser 3 project template with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/) that includes hot-reloading for development and production-ready builds.
 
-This has been updated for Phaser 3.50.0 version and above.
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/sudheej/voidgate-exile">
+    <img src="images/logonew.png" alt="Logo" width="400" height="80">
+  </a>
 
-Loading images via JavaScript module `import` is also supported, although not recommended.
+  <h3 align="center">Void Gate Exile</h3>
+
+  <p align="center">
+    A retro themed minimal tower defence inspired by vector td.
+    <br />
+    <a href="https://github.com/sudheej/voidgate-exile"><strong>Explore the docs »</strong></a>
+   <br />
+    <br />
+    <a href="https://github.com/sudheej/voidgate-exile">View Demo</a>
+    ·
+    <a href="https://github.com/sudheej/voidgate-exile/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/sudheej/voidgate-exile/issues">Request Feature</a>
+  </p>
+</p>
+
+
+
+In progress
+
+Built with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/) that includes hot-reloading
+
+Phaser 3.50.0.
 
 ## Requirements
 
@@ -24,7 +49,6 @@ After cloning the repo, run `npm install` from your project directory. Then, you
 
 After starting the development server with `npm start`, you can edit any files in the `src` folder and webpack will automatically recompile and reload your server (available at `http://localhost:8080` by default).
 
-## Customizing the Template
 
 ### Babel
 
