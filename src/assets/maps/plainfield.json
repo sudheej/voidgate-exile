@@ -354,7 +354,7 @@
             "y": 150,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "2099de2a-223c-4666-b5d8-2a32365fc3d4",
@@ -362,7 +362,7 @@
             "y": 150,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "0b5a2593-9837-4176-91c0-6fcbebaa34bd",
@@ -516,7 +516,7 @@
             "y": 175,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "f97904b6-b796-409c-b4f5-d6c50a4d6037",
@@ -524,7 +524,7 @@
             "y": 175,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "f4a2b67b-7224-4f63-85dd-2a25021640b6",
@@ -678,7 +678,7 @@
             "y": 200,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "f3ef6704-d4e6-4cc6-89c3-869928efa369",
@@ -686,7 +686,7 @@
             "y": 200,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "c523cf29-0900-4f17-a871-f684183d00f4",
@@ -840,7 +840,7 @@
             "y": 225,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "2e426e87-ca2c-4b6c-8b81-7c29bac6341d",
@@ -848,7 +848,7 @@
             "y": 225,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "0a1fdc30-1383-4e81-b0fe-89dc58a73fd4",
@@ -1002,7 +1002,7 @@
             "y": 250,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "40b2868e-db7b-4351-8c5d-227986237ece",
@@ -1010,7 +1010,7 @@
             "y": 250,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "7669aefb-4b66-42d0-aeb3-e5ea966d962e",
@@ -1164,7 +1164,7 @@
             "y": 275,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "68093f4c-6dd8-4663-8b38-7bfba38fb8ba",
@@ -1172,7 +1172,7 @@
             "y": 275,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "e18f7368-c188-4ee1-829d-b6bbaba105d4",
@@ -1326,7 +1326,7 @@
             "y": 300,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "51173276-0c47-4013-b22e-dbc3acfdab33",
@@ -1334,7 +1334,7 @@
             "y": 300,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "068dfc9d-8348-4a39-a2c7-67a4dbceb944",
@@ -1488,7 +1488,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "b4695b4f-b151-49f3-90f3-3d47b6475815",
@@ -1496,7 +1496,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "bdc8a0d7-15bd-4d16-88d1-54dd697df69d",
@@ -1504,7 +1504,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "e4988d94-b583-4f65-b962-a54d21f81b32",
@@ -1512,7 +1512,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "18065a4f-6f5f-45ef-ba70-a0074cb215d6",
@@ -1520,7 +1520,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "b1bea717-2091-4372-af37-9fc50d195eaa",
@@ -1528,7 +1528,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "aaed845e-5bbc-4a25-a50e-5bc9b942e585",
@@ -1536,7 +1536,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "9a599558-e3ec-4ad7-b1a2-17043a1d156f",
@@ -1544,7 +1544,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "f34373ef-f00a-4954-8406-81f51605898b",
@@ -1552,7 +1552,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "969e587d-0546-48ef-9171-bcfe478c10d2",
@@ -1560,7 +1560,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "1f51c0e4-c3e8-4170-8483-5c289c0a9715",
@@ -1568,7 +1568,7 @@
             "y": 325,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "43957abc-ba7b-4cae-bf05-799e039bd6ab",
@@ -1650,7 +1650,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "7d709579-a0a3-4df7-ad81-89b236fd2075",
@@ -1658,7 +1658,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "450c11d0-b869-46d3-a32c-a2cf50fc222b",
@@ -1666,7 +1666,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "5b6cbbb0-311b-407f-ab17-f76f0865b80b",
@@ -1674,7 +1674,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "a173c400-9d64-4978-bcac-5024c0e0c821",
@@ -1682,7 +1682,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "53f7a3af-24fc-4e87-8f7c-4cbf14503783",
@@ -1690,7 +1690,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "659da41a-bf46-480e-ab9e-6e90603d6027",
@@ -1698,7 +1698,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "646bdf3a-2365-4143-8000-53af4a7ddf94",
@@ -1706,7 +1706,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "3be37941-2389-4ac1-913a-df1c100d05bc",
@@ -1714,7 +1714,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "c28cd27f-ee19-4bbb-b74a-5a08958fa118",
@@ -1722,7 +1722,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "9bbc235d-9b76-4f30-801b-c6db6f949108",
@@ -1730,7 +1730,7 @@
             "y": 350,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "af7b44ed-cf3d-491f-a5a9-61c08d4c9c1f",
@@ -1884,7 +1884,7 @@
             "y": 375,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "7c2a9a38-afa4-4a6c-882d-cf72d9f44736",
@@ -1892,7 +1892,7 @@
             "y": 375,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "8ef30c12-d21f-46d5-9d7b-329a5110abb9",
@@ -2046,7 +2046,7 @@
             "y": 400,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "8b61b2be-f317-4b59-916f-8abbdd2e2b72",
@@ -2054,7 +2054,7 @@
             "y": 400,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "96e985a8-3521-4ecd-b717-31aaf9341efb",
@@ -2208,7 +2208,7 @@
             "y": 425,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "917c083f-a895-42bd-a293-a2d444b91d45",
@@ -2216,7 +2216,7 @@
             "y": 425,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "d9a92e8e-e4a5-47f4-8018-8b6923779f6e",
@@ -2370,7 +2370,7 @@
             "y": 450,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "dadd4011-8f77-44ff-aa3d-1edb0740b214",
@@ -2378,7 +2378,7 @@
             "y": 450,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "eccb44c8-8189-43c1-846c-6915727441b5",
@@ -2532,7 +2532,7 @@
             "y": 475,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "59a81900-6a5a-42a5-a14a-2354cc130cd6",
@@ -2540,7 +2540,7 @@
             "y": 475,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "361be87a-ccf1-4362-839b-872b2c537bde",
@@ -2548,7 +2548,7 @@
             "y": 475,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "ce44d213-c3c5-4a60-b60f-7a056beb807b",
@@ -2556,7 +2556,7 @@
             "y": 475,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "f6f9f0df-7ba9-473f-b249-fbab8f3890c4",
@@ -2564,7 +2564,7 @@
             "y": 475,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "8a1c3a1f-8365-4b30-8146-58b237ff019d",
@@ -2572,7 +2572,7 @@
             "y": 475,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "42a431eb-eb13-4367-904f-104b326e1a0f",
@@ -2580,7 +2580,7 @@
             "y": 475,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "37205807-c9fc-46ac-b29e-90b836d42427",
@@ -2694,7 +2694,7 @@
             "y": 500,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "8a36f479-1837-4403-b254-d11c0bfbf78c",
@@ -2702,7 +2702,7 @@
             "y": 500,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "6b17e80c-84ae-4918-811f-d8bc98c4657e",
@@ -2710,7 +2710,7 @@
             "y": 500,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "a9b5f593-6982-406f-8eac-ab71f27a11b3",
@@ -2718,7 +2718,7 @@
             "y": 500,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "cec025e5-d249-4361-83db-8ea5c5b00450",
@@ -2726,7 +2726,7 @@
             "y": 500,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "d370d7a1-6009-41bb-b291-d1143b057e06",
@@ -2734,7 +2734,7 @@
             "y": 500,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "11bd0b1f-2bed-4701-bb26-56badd7d40c2",
@@ -2742,7 +2742,7 @@
             "y": 500,
             "height": 25,
             "width": 25,
-            "type": "plain"
+            "type": "path"
         },
         {
             "_id": "30c44144-7788-4119-9ab9-272e36a2e928",
