@@ -16,6 +16,7 @@ export default function Tile(scene, tileproperties) {
 
 //   graphics.fillGradientStyle(0xffff00, 0xff0000, 0xffff00, 0xff0000, 1);
 
+
 Tile.prototype.createTile = function () {
   this.rectangle.setStrokeStyle(1);
   let entryGradient = new Phaser.GameObjects.Graphics(this.scene);
@@ -35,14 +36,13 @@ Tile.prototype.createTile = function () {
     this.rectangle.fillColor = 0x000000;
     entryGradient.fillGradientStyle(0x000000, 0xff0000, 0x000000, 0xff0000, 1);
     entryGradient.fillRect(
-      this.tileproperties.x - 12  ,
+      this.tileproperties.x - 12,
       this.tileproperties.y - 10,
       this.tileproperties.width,
       this.tileproperties.height
     );
     this.scene.add.existing(entryGradient);
-  } 
-  else if (this.tileproperties.type === "basic_gun") {
+  } else if (this.tileproperties.type === "basic_gun") {
     this.rectangle.fillColor = 0x328720;
   } else {
     this.scene.add.existing(this.rectangle);
