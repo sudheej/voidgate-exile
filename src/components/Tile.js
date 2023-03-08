@@ -16,7 +16,6 @@ export default function Tile(scene, tileproperties) {
 
 //   graphics.fillGradientStyle(0xffff00, 0xff0000, 0xffff00, 0xff0000, 1);
 
-
 Tile.prototype.createTile = function () {
   this.rectangle.setStrokeStyle(1);
   let entryGradient = new Phaser.GameObjects.Graphics(this.scene);

@@ -9,9 +9,17 @@ export default function Map(scene) {
     let genesis = true;
     this.scene = scene
 
+    const isEligible = (tile) => {
+       if(tile.tileproperties.type.includes("path") )
+       {
+        return false
+       }
+      return true
 
+    }
 
     this.createMap = function (mapOriginX, mapOriginY) {
+        scene.input.setDefaultCursor('grab')
         console.log(MappingData)
         let mapHorizontalLength = MappingData.length;
         let mapVerticalLength = MappingData[0].length;
@@ -34,6 +42,7 @@ export default function Map(scene) {
                 })
 
                 tile.rectangle.on('pointerout', () => {
+                    scene.input.setDefaultCursor('grab')
 
                     if (weaponarray.selectedproperty) {
                         tile.rectangle.fillColor = defaultColor
@@ -48,9 +57,17 @@ export default function Map(scene) {
                         tilePositon.x = tile.rectangle.x
                         tilePositon.y = tile.rectangle.y
                         console.log(tilePositon)
-                        tile.rectangle.destroy()
-                        const newWeapon = new Weapon(this.scene, tilePositon)
-                        newWeapon.createTile()
+                        if (isEligible(tile)) {
+                            console.log(tile.tileproperties)
+                            tile.rectangle.destroy()
+                            const newWeapon = new Weapon(this.scene, tilePositon)
+                            newWeapon.createTile()
+                        }
+                        else {
+                            scene.input.setDefaultCursor('not-allowed')
+            
+                        }
+                    
                     }
                 })
             }

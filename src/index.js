@@ -11,9 +11,22 @@ class Main extends Phaser.Scene {
     super();
   }
 
-  preload() {}
+  preload() {
+    this.load.audio('backgroundMusic', 'assets/background-music.mp3');
+
+
+
+  }
 
   create() {
+    // Add the music to the scene
+    const music = this.sound.add('backgroundMusic', {
+      loop: true,
+      volume: 0.5
+    });
+    // Start playing the music
+    music.play();
+
     this.input.setDefaultCursor("url(assets/cursors/cur.cur), cursor");
     const map = new Map(this);
     map.MappingData = plainmap;
