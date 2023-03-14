@@ -23,6 +23,8 @@
 
 In progress
 
+[Demo](https://master--wondrous-nasturtium-eedb79.netlify.app/)
+
 Built with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/) that includes hot-reloading
 
 Phaser 3.50.0.
