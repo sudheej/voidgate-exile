@@ -5,6 +5,9 @@ import Weapon from "./components/Weapon";
 import plainmap from "./assets/maps/plainfield.json";
 import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
+import mySoundFileMp3 from './assets/audio/background-music.mp3';
+import mySoundFileogg from './assets/audio/oggsound.ogg'
+
 
 class Main extends Phaser.Scene {
   constructor() {
@@ -12,20 +15,24 @@ class Main extends Phaser.Scene {
   }
 
   preload() {
-    this.load.audio('backgroundMusic', 'assets/background-music.mp3');
-
-
-
+    
+    this.load.audio('theme', [
+      mySoundFileMp3,
+      mySoundFileogg
+  ]);
   }
 
   create() {
-    // Add the music to the scene
-    const music = this.sound.add('backgroundMusic', {
-      loop: true,
-      volume: 0.5
-    });
-    // Start playing the music
+console.log(mySoundFileMp3)
+    this.load.audio('theme', [
+      mySoundFileMp3,
+      mySoundFileogg
+  ]);
+  
+    var music = this.sound.add('theme');
+
     music.play();
+    console.log(music)
 
     this.input.setDefaultCursor("url(assets/cursors/cur.cur), cursor");
     const map = new Map(this);
@@ -33,6 +40,7 @@ class Main extends Phaser.Scene {
     map.createMap(100, 100);
     const inventory = new Inventory(this);
     inventory.createInvetory();
+
   }
 }
 
@@ -43,6 +51,7 @@ const config = {
   width: 1000,
   height: 800,
   mode: Phaser.Scale.FIT,
+
   autoCenter: Phaser.Scale.CENTER_BOTH,
   scene: Main,
 };
