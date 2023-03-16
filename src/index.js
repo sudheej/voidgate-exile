@@ -4,6 +4,7 @@ import Map from "./components/Map";
 import Path from "./components/Path";
 import Weapon from "./components/Weapon";
 import plainmap from "./assets/maps/plainfield.json";
+import plainmap_path from "./assets/maps/path/_path_plainfield.json";
 import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
 import mySoundFileMp3 from "./assets/audio/background-music.mp3";
@@ -24,8 +25,6 @@ class Main extends Phaser.Scene {
     music.play();
     console.log(music);
 
-    
-
     this.input.setDefaultCursor("url(assets/cursors/cur.cur), cursor");
     const map = new Map(this);
     map.MappingData = plainmap;
@@ -34,9 +33,11 @@ class Main extends Phaser.Scene {
     inventory.createInvetory();
 
     const path = new Path(this);
+    path.PathData = plainmap_path;
     path.createPath(map.MappingData);
     console.log(path.PathData);
   }
+  
 }
 
 const config = {

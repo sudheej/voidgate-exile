@@ -4,122 +4,114 @@ export default function Path(scene) {
     function drawDots(x, y, i) {
         var graphics = scene.add.graphics();
 
-
-
         graphics.fillStyle(0xffffff, 1); // Set fill color to blue
-        x = x - 13
-        y = y - 10
+        x = x - 13;
+        y = y - 10;
         graphics.fillCircle(x, y, 1); // Draw a circle shape at position (x, y) with a radius of 15 pixels
-        scene.add.text(x + 2, y, i, { font: '10px Arial', fill: '#ffffff' });
-
+        scene.add.text(x + 2, y, i, { font: "10px Arial", fill: "#ffffff" });
     }
     function drawLine(points) {
+
         const graphics = scene.add.graphics();
-    
+
         // define the line color and width
-        graphics.lineStyle(2, 0xFFFFFF);
-    
+        graphics.lineStyle(2, 0xffffff);
+        console.log(points[0].y)
         // move the graphics object to the starting point of the line
         graphics.moveTo(points[0].x, points[0].y);
-    
+
         // loop through the remaining points in the array and draw lines between them
         for (let i = 1; i < points.length; i++) {
+            console.log(points[i])
             graphics.lineTo(points[i].x, points[i].y);
         }
-    
+
         // render the graphics object
         graphics.strokePath();
     }
 
-    function getPath(start, end, coordinates) {
-        // Initialize an empty array to store the path coordinates
-        let path = [];
-
-        // Add the start coordinate to the path array
-        path.push(start);
-
-        // Find the vertical and horizontal coordinates of the start and end points
-        let startX = start.x;
-        let startY = start.y;
-        let endX = end.x;
-        let endY = end.y;
-
-        // Find the direction of the path (horizontal or vertical)
-        let direction = startX === endX ? 'vertical' : 'horizontal';
-
-        // Sort the coordinates based on the direction of the path
-        let sortedCoordinates = coordinates.sort((a, b) => {
-            if (direction === 'horizontal') {
-                return a.x - b.x;
-            } else {
-                return a.y - b.y;
-            }
-        });
-
-        // Find the start and end indices of the path in the sorted coordinates
-        let startIndex = sortedCoordinates.findIndex(coord => {
-            return direction === 'horizontal' ? coord.x === startX && coord.y === startY : coord.x === startX && coord.y === startY;
-        });
-
-        let endIndex = sortedCoordinates.findIndex(coord => {
-            return direction === 'horizontal' ? coord.x === endX && coord.y === endY : coord.x === endX && coord.y === endY;
-        });
-
-        // Add the coordinates between the start and end indices to the path array
-        if (startIndex < endIndex) {
-            path.push(...sortedCoordinates.slice(startIndex + 1, endIndex + 1));
-        } else {
-            path.push(...sortedCoordinates.slice(endIndex, startIndex).reverse());
+    function getAlternateElements(arr) {
+        let result = [];
+        for (let i = 0; i < arr.length; i += 2) {
+            result.push(arr[i]);
         }
-
-        // Add the end coordinate to the path array
-        path.push(end);
-
-        return path;
+        return result;
     }
 
+    function followPath(path, objectToTween) {
+        // Create a new tween object
+
+        path.map(pos => {
+            
+        scene.tweens.add({
+
+            targets: objectToTween,
+            x: pos.x,
+            y: pos.y,
+            ease: 'easing',
+            duration: 1500,
+            yoyo:true,
+            repeat: 0
+      
+        })
+        })
+   // Create a tween object that moves the shape through the path
+
+   // convert each object in the 'path' array to a Phaser.Math.Vector2 object
+// var pathPoints = path.map(function(point) {
+//     return new Phaser.Math.Vector2(point.x, point.y);
+//   });
+  
+//   // create a path using the converted points
+//   var path = new Phaser.Curves.Path();
+//   path.splineTo(pathPoints);
+  
+//   // use the FollowPath plugin to make the circle follow the path
+//   scene.tweens.add({
+//     targets: objectToTween,
+//     t: 1,
+//     ease: 'Linear',
+//     loop: 0,
+//     yoyo: false,
+//     duration: 50,
+//     onComplete: function() {
+//       // do something when the tween completes
+//     },
+//     onUpdate: function(tween, target) {
+//       // update the circle's position along the path
+//       if(tween.getValue()) {
+//         var position = path.getPoint(tween.getValue());
+//         console.log(position)
+//         target.setPosition(position.x, position.y);
+//       }
+
+      
+//     }
+//   });
+
+  
+
+
+    }
 
     this.createPath = function (MappingData) {
-        PathData = MappingData;
-        let coordinates = []
-        for (let i = 0; i < MappingData.length; i++) {
-            let midpoints = MappingData[i].map((rectangle) => {
-                if (rectangle.type === "plain") {
-                    return;
-                } else {
-                    return getRectangleMidpoint(
-                        rectangle.x,
-                        rectangle.y,
-                        rectangle.width,
-                        rectangle.height
-                    );
-                }
-            });
+        console.log(PathData[0])
+        var graphics = scene.add.circle(PathData[0][0].x,PathData[0][0].y,5)
 
-            // Output the midpoints to the console
+        // Draw a shape
+        graphics.setStrokeStyle(1,0x05F9FB)
 
-            midpoints.forEach((midpoint, i) => {
-                if (midpoint) {
-                    console.log(
-                        "Midpoint of rectangle " +
-                        i +
-                        ": (" +
-                        midpoint.x +
-                        ", " +
-                        midpoint.y +
-                        ")"
-                    );
-                    coordinates.push({ x: midpoint.x, y: midpoint.y })
-                    drawDots(midpoint.x, midpoint.y, i)
-                }
-            });
-        }
+    
+    
 
-        const startCoord = { x: 187.5, y: 112.5 };
-        const endCoord = { x: 587.5, y: 487.5 };
 
-        console.log(getPath(startCoord, endCoord, coordinates));
-        drawLine(getPath(startCoord, endCoord, coordinates))
+   
+
+        
+        
+        followPath(PathData[0], graphics)
+
+        drawLine(PathData[0])
 
     };
 
@@ -132,6 +124,9 @@ export default function Path(scene) {
     Object.defineProperty(this, "PathData", {
         get: function () {
             return PathData;
+        },
+        set: function (value) {
+            PathData = value;
         },
     });
 }
