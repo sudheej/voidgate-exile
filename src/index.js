@@ -37,7 +37,6 @@ class Main extends Phaser.Scene {
     path.createPath(map.MappingData);
     console.log(path.PathData);
   }
-  
 }
 
 const config = {

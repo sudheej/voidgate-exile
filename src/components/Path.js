@@ -1,132 +1,96 @@
 export default function Path(scene) {
-    let PathData;
+  let PathData;
 
-    function drawDots(x, y, i) {
-        var graphics = scene.add.graphics();
 
-        graphics.fillStyle(0xffffff, 1); // Set fill color to blue
-        x = x - 13;
-        y = y - 10;
-        graphics.fillCircle(x, y, 1); // Draw a circle shape at position (x, y) with a radius of 15 pixels
-        scene.add.text(x + 2, y, i, { font: "10px Arial", fill: "#ffffff" });
-    }
-    function drawLine(points) {
+  function drawLine(points) {
+    const graphics = scene.add.graphics();
 
-        const graphics = scene.add.graphics();
+    // define the line color and width
+    graphics.lineStyle(2, 0xffffff);
 
-        // define the line color and width
-        graphics.lineStyle(2, 0xffffff);
-        console.log(points[0].y)
-        // move the graphics object to the starting point of the line
-        graphics.moveTo(points[0].x, points[0].y);
+    // move the graphics object to the starting point of the line
+    graphics.moveTo(points[0].x, points[0].y);
 
-        // loop through the remaining points in the array and draw lines between them
-        for (let i = 1; i < points.length; i++) {
-            console.log(points[i])
-            graphics.lineTo(points[i].x, points[i].y);
-        }
+    // loop through the remaining points in the array and draw lines between them
+    for (let i = 1; i < points.length; i++) {
 
-        // render the graphics object
-        graphics.strokePath();
+      graphics.lineTo(points[i].x, points[i].y);
     }
 
-    function getAlternateElements(arr) {
-        let result = [];
-        for (let i = 0; i < arr.length; i += 2) {
-            result.push(arr[i]);
-        }
-        return result;
+    // render the graphics object
+    graphics.strokePath();
+  }
+
+
+
+  function createEnemyWithPath(coordinates,enemy) {
+    // Parse the JSON data
+    //var points = JSON.parse(coordinates);
+
+    var points = coordinates;
+
+    // Create a new path object
+    var path = new Phaser.Curves.Path(points[0].x, points[0].y);
+
+    // Add points to the path
+    for (var i = 1; i < points.length; i++) {
+        path.lineTo(points[i].x, points[i].y);
     }
 
-    function followPath(path, objectToTween) {
-        // Create a new tween object
-
-        path.map(pos => {
-            
-        scene.tweens.add({
-
-            targets: objectToTween,
-            x: pos.x,
-            y: pos.y,
-            ease: 'easing',
-            duration: 1500,
-            yoyo:true,
-            repeat: 0
-      
-        })
-        })
-   // Create a tween object that moves the shape through the path
-
-   // convert each object in the 'path' array to a Phaser.Math.Vector2 object
-// var pathPoints = path.map(function(point) {
-//     return new Phaser.Math.Vector2(point.x, point.y);
-//   });
-  
-//   // create a path using the converted points
-//   var path = new Phaser.Curves.Path();
-//   path.splineTo(pathPoints);
-  
-//   // use the FollowPath plugin to make the circle follow the path
-//   scene.tweens.add({
-//     targets: objectToTween,
-//     t: 1,
-//     ease: 'Linear',
-//     loop: 0,
-//     yoyo: false,
-//     duration: 50,
-//     onComplete: function() {
-//       // do something when the tween completes
-//     },
-//     onUpdate: function(tween, target) {
-//       // update the circle's position along the path
-//       if(tween.getValue()) {
-//         var position = path.getPoint(tween.getValue());
-//         console.log(position)
-//         target.setPosition(position.x, position.y);
-//       }
-
-      
-//     }
-//   });
-
-  
-
-
-    }
-
-    this.createPath = function (MappingData) {
-        console.log(PathData[0])
-        var graphics = scene.add.circle(PathData[0][0].x,PathData[0][0].y,5)
-
-        // Draw a shape
-        graphics.setStrokeStyle(1,0x05F9FB)
-
-    
+    // Create the enemy object as a shape
     
 
+    // Create a variable to store the progress of the tween
+    var tweenProgress = 0;
 
-   
-
-        
-        
-        followPath(PathData[0], graphics)
-
-        drawLine(PathData[0])
-
-    };
-
-    function getRectangleMidpoint(x, y, width, height) {
-        let midpointX = x + width / 2;
-        let midpointY = y + height / 2;
-        return { x: midpointX, y: midpointY };
-    }
-
-    Object.defineProperty(this, "PathData", {
-        get: function () {
-            return PathData;
-        },
-        set: function (value) {
-            PathData = value;
-        },
+    // Set up the update function for the tween
+    scene.tweens.add({
+        targets: { progress: 1 },
+        ease: 'Linear',
+        duration: 2000,
+        repeat: -1,
+        yoyo: true
     });
+
+    // Update the position of the enemy object based on the progress of the tween
+    scene.time.addEvent({
+        delay: 160,
+        loop: true,
+        callback: function () {
+            tweenProgress += 0.016; // Increment the progress by the time elapsed since last update (16ms)
+            if (tweenProgress > 1) {
+                tweenProgress -= 1; // Loop back to the beginning of the path
+            }
+            var position = path.getPoint(tweenProgress);
+            enemy.setPosition(position.x, position.y);
+        }
+    });
+}
+
+
+
+ 
+
+  this.createPath = function (MappingData) {
+    console.log(PathData[0]);
+  
+    var enemy = scene.add.rectangle(PathData[0][0].x, PathData[0][0].y, 10, 10, 0x0000ff);
+
+    // Draw a shape
+
+    createEnemyWithPath(PathData[0],enemy)
+
+    // use below to debug path followed by enemy
+    //drawLine(PathData[0]);
+  };
+
+
+  Object.defineProperty(this, "PathData", {
+    get: function () {
+      return PathData;
+    },
+    set: function (value) {
+      PathData = value;
+    },
+  });
 }
