@@ -3,16 +3,23 @@ import Tile from "./components/Tile";
 import Map from "./components/Map";
 import Path from "./components/Path";
 import Weapon from "./components/Weapon";
+import Enemy  from "./components/Enemy";
 import plainmap from "./assets/maps/plainfield.json";
 import plainmap_path from "./assets/maps/path/_path_plainfield.json";
 import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
 import mySoundFileMp3 from "./assets/audio/background-music.mp3";
 import mySoundFileogg from "./assets/audio/oggsound.ogg";
+import GlowFilterPostFx from 'phaser3-rex-plugins/plugins/glowfilterpipeline.js';
+
+
+
 
 class Main extends Phaser.Scene {
   constructor() {
     super();
+
+
   }
 
   preload() {
@@ -36,6 +43,29 @@ class Main extends Phaser.Scene {
     path.PathData = plainmap_path;
     path.createPath(map.MappingData);
     console.log(path.PathData);
+
+    var enemyPath = path.PathData[0]
+
+    const enemy = new Enemy(this);
+
+
+ 
+    
+    // Create the enemy object as a shape
+    var blue_bingili = this.add.rectangle(
+        enemyPath[0].x,
+        enemyPath[0].y,
+        10,
+        10,
+        0xD0D7FF
+    );
+
+
+    blue_bingili.setPostPipeline(GlowFilterPostFx);
+
+
+    enemy.createEnemyWithPath(enemyPath,blue_bingili)
+
   }
 }
 
@@ -45,8 +75,8 @@ const config = {
   parent: "game",
   width: 1000,
   height: 800,
+  pipeline: [GlowFilterPostFx],
   mode: Phaser.Scale.FIT,
-
   autoCenter: Phaser.Scale.CENTER_BOTH,
   scene: Main,
 };

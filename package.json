@@ -45,6 +45,7 @@
   "dependencies": {
     "husky": "^8.0.1",
     "mobx": "^6.6.2",
-    "phaser": "^3.55.0"
+    "phaser": "^3.55.0",
+    "phaser3-rex-plugins": "^1.1.83"
   }
 }
