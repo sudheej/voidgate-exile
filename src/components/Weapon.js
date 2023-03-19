@@ -8,25 +8,43 @@ export default function Weapon(scene, weaponproperties) {
 Weapon.prototype = Object.create(Tile.prototype);
 function checkEnemyInZone(weaponShape, enemyShape, scene) {
   // create current shape object
-  let currentShape = new Phaser.Geom.Rectangle(weaponShape.x, weaponShape.y, weaponShape.width, weaponShape.height);
+  let currentShape = new Phaser.Geom.Rectangle(
+    weaponShape.x,
+    weaponShape.y,
+    weaponShape.width,
+    weaponShape.height
+  );
 
   // create given shape object
-  let givenShape = new Phaser.Geom.Rectangle(enemyShape.x, enemyShape.y, enemyShape.width, enemyShape.height);
+  let givenShape = new Phaser.Geom.Rectangle(
+    enemyShape.x,
+    enemyShape.y,
+    enemyShape.width,
+    enemyShape.height
+  );
 
   // create a circular zone around the current shape object
   let zoneRadius = 60;
-  let zone = new Phaser.Geom.Circle(currentShape.centerX, currentShape.centerY, zoneRadius);
+  let zone = new Phaser.Geom.Circle(
+    currentShape.centerX,
+    currentShape.centerY,
+    zoneRadius
+  );
 
   let graphics = scene.add.graphics();
   graphics.lineStyle(2, 0x00ff00);
-  graphics.strokeCircle(zone.x, zone.y, zoneRadius * 2);
+  graphics.strokeCircle(zone.x, zone.y, zoneRadius);
 
   // check if the given shape object intersects or overlaps with the zone
-  let distance = Phaser.Math.Distance.Between(givenShape.centerX, givenShape.centerY, zone.x, zone.y);
-  console.log(distance)
+  let distance = Phaser.Math.Distance.Between(
+    givenShape.centerX,
+    givenShape.centerY,
+    zone.x,
+    zone.y
+  );
+  
   if (distance < zoneRadius) {
     console.log("Got close to the enemy");
-  
   }
 }
 
@@ -66,11 +84,10 @@ Weapon.prototype.createTile = function () {
       // iterate over the array and log the type and name of each child
       let objects = this.scene.children.getAll();
       const enemyObjects = objects.filter((obj) => obj.name === "enemy");
-      console.log("Enemies found:", enemyObjects.length);
-      enemyObjects.map(enemy => {
-        
-        checkEnemyInZone(weaponHull,enemy,this.scene)
-      })
+      //console.log("Enemies found:", enemyObjects.length);
+      enemyObjects.map((enemy) => {
+        checkEnemyInZone(weaponHull, enemy, this.scene);
+      });
     }.bind(this), // Bind the "this" value of the Weapon object to the callback function
   });
 
