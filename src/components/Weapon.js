@@ -6,6 +6,7 @@ export default function Weapon(scene, weaponproperties) {
 }
 
 Weapon.prototype = Object.create(Tile.prototype);
+
 function checkEnemyInZone(weaponShape, enemyShape, scene) {
   // create current shape object
   let currentShape = new Phaser.Geom.Rectangle(
@@ -42,10 +43,34 @@ function checkEnemyInZone(weaponShape, enemyShape, scene) {
     zone.x,
     zone.y
   );
-  
+
   if (distance < zoneRadius) {
     console.log("Got close to the enemy");
+    fireLaser(weaponShape,enemyShape,scene)
   }
+}
+
+function fireLaser(weapon,enemy,scene) {
+
+  let distancefromenemy = Phaser.Math.Distance.Between(weapon.x,weapon.y,enemy.x,enemy.y)
+  let laser = scene.add.line(weapon.x,weapon.y,distancefromenemy,0,0,0)
+  laser.lineWidth = 0.02
+  laser.setOrigin(0,0)
+  laser.setStrokeStyle(1,0x05F9FB)
+  let tween = scene.tweens.add({
+
+    targets: laser,
+    alpha: 0,
+    ease: 'Cubic.easeOut',  
+    duration: 40,
+    repeat: -1,
+    yoyo: true
+
+});
+
+  laser.rotation = Phaser.Math.Angle.Between(weapon.x,weapon.y,enemy.x + scene.cameras.main.scrollX,enemy.y + scene.cameras.main.scrollY)
+  laser.setTo(0,0,distancefromenemy,0)
+  console.log(distancefromenemy)
 }
 
 Weapon.prototype.createTile = function () {
@@ -87,6 +112,7 @@ Weapon.prototype.createTile = function () {
       //console.log("Enemies found:", enemyObjects.length);
       enemyObjects.map((enemy) => {
         checkEnemyInZone(weaponHull, enemy, this.scene);
+      
       });
     }.bind(this), // Bind the "this" value of the Weapon object to the callback function
   });

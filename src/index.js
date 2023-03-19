@@ -24,8 +24,8 @@ class Main extends Phaser.Scene {
   create() {
     var music = this.sound.add("theme");
 
-    music.play();
-    console.log(music);
+    //music.play();
+
 
     this.input.setDefaultCursor("url(assets/cursors/cur.cur), cursor");
     const map = new Map(this);
@@ -37,7 +37,7 @@ class Main extends Phaser.Scene {
     const path = new Path(this);
     path.PathData = plainmap_path;
     path.createPath(map.MappingData);
-    console.log(path.PathData);
+
 
     var enemyPath = path.PathData[0];
 
