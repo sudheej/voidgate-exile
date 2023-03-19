@@ -20,7 +20,7 @@ Inventory.prototype.createInvetory = function () {
   weapon.createTile();
 
   weapon.rectangle.setInteractive();
-  console.log(weapon);
+  //console.log(weapon);
   weapon.rectangle.on("pointerdown", () => {
     weaponarray.selectedproperty = weapon;
   });

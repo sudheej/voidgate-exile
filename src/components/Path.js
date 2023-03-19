@@ -11,10 +11,7 @@ export default function Path(scene) {
     graphics.strokePath();
   }
 
-
-
   this.createPath = function (MappingData) {
-
     // var enemy = scene.add.rectangle(
     //   PathData[0][0].x,
     //   PathData[0][0].y,
@@ -22,7 +19,6 @@ export default function Path(scene) {
     //   10,
     //   0x0000ff
     // );
-
     // createEnemyWithPath(PathData[0], enemy);
     // use below to debug path followed by enemy
     //drawLine(PathData[0]);

@@ -16,7 +16,7 @@ export default function Map(scene) {
 
   this.createMap = function (mapOriginX, mapOriginY) {
     scene.input.setDefaultCursor("grab");
-    console.log(MappingData);
+    //console.log(MappingData);
     let mapHorizontalLength = MappingData.length;
     let mapVerticalLength = MappingData[0].length;
     let defaultColor = 0x80dfff;
@@ -47,9 +47,9 @@ export default function Map(scene) {
             let tilePositon = weaponarray.selectedproperty.tileproperties;
             tilePositon.x = tile.rectangle.x;
             tilePositon.y = tile.rectangle.y;
-            console.log(tilePositon);
+            //console.log(tilePositon);
             if (isEligible(tile)) {
-              console.log(tile.tileproperties);
+              //(tile.tileproperties);
               tile.rectangle.destroy();
               const newWeapon = new Weapon(this.scene, tilePositon);
               newWeapon.createTile();
