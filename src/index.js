@@ -58,16 +58,21 @@ class Main extends Phaser.Scene {
         10,
         10,
         0xD0D7FF
-    );
+    ).setName("enemy")
 
 
     blue_bingili.setPostPipeline(GlowFilterPostFx);
 
+    blue_bingili.setName("enemy")
 
+    blue_bingili.name = "enemy"
     enemy.createEnemyWithPath(enemyPath,blue_bingili)
 
   }
+
+
 }
+
 
 const config = {
   type: Phaser.AUTO,

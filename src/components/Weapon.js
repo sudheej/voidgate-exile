@@ -19,6 +19,8 @@ Weapon.prototype.createTile = function () {
     0,
     0xffffff
   );
+  var tweenProgress = 0;
+
   this.scene.tweens.add({
     targets: weaponPrimary,
     angle: 90,
@@ -26,6 +28,30 @@ Weapon.prototype.createTile = function () {
     repeat: -1,
     ease: "Sine.easeInOut",
   });
+
+
+  // iterate over the objects and log their names
+
+
+
+
+  this.scene.time.addEvent({
+    delay: 500,
+    loop: true,
+    callback: function () {
+      tweenProgress += 0.003; // Increment the progress by the time elapsed since last update (16ms)
+      if (tweenProgress > 1) {
+        tweenProgress -= 1; // Loop back to the beginning of the path
+      }
+
+      // iterate over the array and log the type and name of each child
+      let objects = this.scene.children.getAll();
+      const enemyObjects = objects.filter((obj) => obj.name === "enemy");
+      console.log("Enemies found:", enemyObjects.length);
+
+    }.bind(this), // Bind the "this" value of the Weapon object to the callback function
+  });
+
   this.layer.add(weaponHull, weaponPrimary);
 
   this.rectangle.name = this.tileproperties._id;

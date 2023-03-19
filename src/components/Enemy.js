@@ -14,7 +14,9 @@ export default function Enemy(scene) {
         //var particles = scene.add.particles('particle_texture');
 
         // Create an emitter for the particles
-    
+        
+        enemy.setName("enemy")
+        enemy.name = "enemy"
 
         scene.tweens.add({
             targets: enemy,
@@ -41,6 +43,7 @@ export default function Enemy(scene) {
             }
             var position = path.getPoint(tweenProgress);
             enemy.setPosition(position.x, position.y);
+            
 
           },
         });
