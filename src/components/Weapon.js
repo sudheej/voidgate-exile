@@ -7,7 +7,7 @@ export default function Weapon(scene, weaponproperties) {
 
 Weapon.prototype = Object.create(Tile.prototype);
 
-let TARGET_ON_SIGHT=false
+let TARGET_ON_SIGHT = false;
 
 function checkEnemyInZone(weaponShape, enemyShape, scene) {
   // if (weaponShape.name === "weapontimele")
@@ -31,15 +31,12 @@ function checkEnemyInZone(weaponShape, enemyShape, scene) {
 
   // create a circular zone around the current shape object
   let zoneRadius = 60;
-  let zone = new Phaser.Geom.Circle(
-    currentShape.x,
-    currentShape.y,
-    zoneRadius
-  );
+  let zone = new Phaser.Geom.Circle(currentShape.x, currentShape.y, zoneRadius);
 
-  let graphics = scene.add.graphics();
-  graphics.lineStyle(2, 0x00ff00);
-  graphics.strokeCircle(zone.x, zone.y, zoneRadius);
+  // Debug to draw in zone.
+  // let graphics = scene.add.graphics();
+  // graphics.lineStyle(2, 0x00ff00);
+  // graphics.strokeCircle(zone.x, zone.y, zoneRadius);
 
   // check if the given shape object intersects or overlaps with the zone
   let distance = Phaser.Math.Distance.Between(
@@ -50,7 +47,6 @@ function checkEnemyInZone(weaponShape, enemyShape, scene) {
   );
 
   if (distance < zoneRadius) {
-    console.log("Got close to the enemy");
     fireLaser(weaponShape, enemyShape, scene);
   }
 }
@@ -82,13 +78,11 @@ function fireLaser(weapon, enemy, scene) {
     enemy.y + scene.cameras.main.scrollY
   );
   laser.setTo(0, 0, distancefromenemy, 0);
-  
-  console.log(distancefromenemy);
+
 
   scene.time.delayedCall(20, () => {
     laser.destroy();
   });
-
 }
 
 Weapon.prototype.createTile = function () {
@@ -111,7 +105,7 @@ Weapon.prototype.createTile = function () {
     delay: 500,
     loop: true,
     callback: function () {
-      tweenProgress += 0.003; // Increment the progress by the time elapsed since last update (16ms)
+      tweenProgress += 0.5; // Increment the progress by the time elapsed since last update (16ms)
       if (tweenProgress > 1) {
         tweenProgress -= 1; // Loop back to the beginning of the path
       }
@@ -128,6 +122,5 @@ Weapon.prototype.createTile = function () {
 
   this.layer.add(weaponHull, weaponPrimary);
 
-  
   Tile.prototype.createTile.call(this);
 };

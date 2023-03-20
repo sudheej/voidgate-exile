@@ -21,12 +21,23 @@ class Main extends Phaser.Scene {
     this.load.audio("theme", [mySoundFileMp3, mySoundFileogg]);
   }
 
+ 
+
   create() {
-    var music = this.sound.add("theme");
+
+    this.text = this.add.text(10, 10, '', {
+      font: '16px Arial',
+      fill: '#ffffff'
+    });
+
+    // Register the update event to calculate the FPS
+   // this.events.on('update', this.updateFps, this);
+
+    //var music = this.sound.add("theme");
 
     //music.play();
 
-    this.input.setDefaultCursor("url(assets/cursors/cur.cur), cursor");
+    //this.input.setDefaultCursor("url(assets/cursors/cur.cur), cursor");
     const map = new Map(this);
     map.MappingData = plainmap;
     map.createMap(100, 100);
@@ -53,7 +64,22 @@ class Main extends Phaser.Scene {
     blue_bingili.name = "enemy";
     enemy.createEnemyWithPath(enemyPath, blue_bingili);
   }
+
+
+  update(time, delta) {
+    // calculate fps
+    let fps = Math.round(1000 / delta);
+
+    // calculate cpu and memory usage
+    let memory = Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024);
+
+    // update text object with current fps, cpu, and memory usage
+    this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
+  }
+
+
 }
+
 
 const config = {
   type: Phaser.AUTO,
@@ -61,16 +87,8 @@ const config = {
   parent: "game",
   width: 1000,
   height: 800,
-  pipeline: [GlowFilterPostFx],
   mode: Phaser.Scale.FIT,
   autoCenter: Phaser.Scale.CENTER_BOTH,
-  physics: {
-    default: "arcade",
-    arcade: {
-      debug: true,
-      gravity: { y: 200 },
-    },
-  },
   scene: Main,
 };
 
