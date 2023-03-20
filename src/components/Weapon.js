@@ -7,7 +7,12 @@ export default function Weapon(scene, weaponproperties) {
 
 Weapon.prototype = Object.create(Tile.prototype);
 
+let TARGET_ON_SIGHT=false
+
 function checkEnemyInZone(weaponShape, enemyShape, scene) {
+  // if (weaponShape.name === "weapontimele")
+  // return;
+
   // create current shape object
   let currentShape = new Phaser.Geom.Rectangle(
     weaponShape.x,
@@ -27,8 +32,8 @@ function checkEnemyInZone(weaponShape, enemyShape, scene) {
   // create a circular zone around the current shape object
   let zoneRadius = 60;
   let zone = new Phaser.Geom.Circle(
-    currentShape.centerX,
-    currentShape.centerY,
+    currentShape.x,
+    currentShape.y,
     zoneRadius
   );
 
@@ -46,35 +51,49 @@ function checkEnemyInZone(weaponShape, enemyShape, scene) {
 
   if (distance < zoneRadius) {
     console.log("Got close to the enemy");
-    fireLaser(weaponShape,enemyShape,scene)
+    fireLaser(weaponShape, enemyShape, scene);
   }
 }
 
-function fireLaser(weapon,enemy,scene) {
-
-  let distancefromenemy = Phaser.Math.Distance.Between(weapon.x,weapon.y,enemy.x,enemy.y)
-  let laser = scene.add.line(weapon.x,weapon.y,distancefromenemy,0,0,0)
-  laser.lineWidth = 0.02
-  laser.setOrigin(0,0)
-  laser.setStrokeStyle(1,0x05F9FB)
+function fireLaser(weapon, enemy, scene) {
+  let distancefromenemy = Phaser.Math.Distance.Between(
+    weapon.x,
+    weapon.y,
+    enemy.x,
+    enemy.y
+  );
+  let laser = scene.add.line(weapon.x, weapon.y, distancefromenemy, 0, 0, 0);
+  laser.lineWidth = 0.02;
+  laser.setOrigin(0, 0);
+  laser.setStrokeStyle(1, 0x05f9fb);
   let tween = scene.tweens.add({
-
     targets: laser,
     alpha: 0,
-    ease: 'Cubic.easeOut',  
+    ease: "Cubic.easeOut",
     duration: 40,
-    repeat: -1,
-    yoyo: true
+    repeat: 0,
+    yoyo: true,
+  });
 
-});
+  laser.rotation = Phaser.Math.Angle.Between(
+    weapon.x,
+    weapon.y,
+    enemy.x + scene.cameras.main.scrollX,
+    enemy.y + scene.cameras.main.scrollY
+  );
+  laser.setTo(0, 0, distancefromenemy, 0);
+  
+  console.log(distancefromenemy);
 
-  laser.rotation = Phaser.Math.Angle.Between(weapon.x,weapon.y,enemy.x + scene.cameras.main.scrollX,enemy.y + scene.cameras.main.scrollY)
-  laser.setTo(0,0,distancefromenemy,0)
-  console.log(distancefromenemy)
+  scene.time.delayedCall(20, () => {
+    laser.destroy();
+  });
+
 }
 
 Weapon.prototype.createTile = function () {
   this.rectangle.setInteractive();
+  this.rectangle.name = this.tileproperties._id;
   let weaponHull = this.scene.add.existing(this.rectangle);
   let weaponPrimary = this.scene.add.line(
     this.tileproperties.x,
@@ -86,15 +105,6 @@ Weapon.prototype.createTile = function () {
     0xffffff
   );
   var tweenProgress = 0;
-
-  this.scene.tweens.add({
-    targets: weaponPrimary,
-    angle: 90,
-    yoyo: true,
-    repeat: -1,
-    ease: "Sine.easeInOut",
-  });
-
   // iterate over the objects and log their names
 
   this.scene.time.addEvent({
@@ -112,13 +122,12 @@ Weapon.prototype.createTile = function () {
       //console.log("Enemies found:", enemyObjects.length);
       enemyObjects.map((enemy) => {
         checkEnemyInZone(weaponHull, enemy, this.scene);
-      
       });
     }.bind(this), // Bind the "this" value of the Weapon object to the callback function
   });
 
   this.layer.add(weaponHull, weaponPrimary);
 
-  this.rectangle.name = this.tileproperties._id;
+  
   Tile.prototype.createTile.call(this);
 };
