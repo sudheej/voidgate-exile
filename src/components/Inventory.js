@@ -17,6 +17,7 @@ Inventory.prototype.createInvetory = function () {
 
   const weapon = new Weapon(this.scene, WeaponProperties);
 
+  weapon.rectangle.name = "actualname";
   weapon.createTile();
 
   weapon.rectangle.setInteractive();
