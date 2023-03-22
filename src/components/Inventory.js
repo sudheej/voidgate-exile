@@ -16,7 +16,6 @@ Inventory.prototype.createInvetory = function () {
   };
 
   const weapon = new Weapon(this.scene, WeaponProperties);
-  var sfx = this.scene.sound.add("sfx_weapon_pickup");
 
   weapon.rectangle.name = "actualname";
   weapon.createTile();
@@ -24,6 +23,6 @@ Inventory.prototype.createInvetory = function () {
   weapon.rectangle.setInteractive();
   weapon.rectangle.on("pointerdown", () => {
     weaponarray.selectedproperty = weapon;
-    sfx.play();
+    this.scene.audio.play("_aud_weapon_pickup");
   });
 };

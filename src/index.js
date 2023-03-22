@@ -8,29 +8,33 @@ import plainmap from "./assets/maps/plainfield.json";
 import plainmap_path from "./assets/maps/path/_path_plainfield.json";
 import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
-import mySoundFileMp3 from "./assets/audio/background-music.mp3";
-import mySoundFileogg from "./assets/audio/oggsound.ogg";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
+import Audio from "./utilities/Audio";
 
 class Main extends Phaser.Scene {
   constructor() {
     super();
+    this.audio = new Audio(this);
   }
 
   preload() {
-    this.load.audio("theme", [mySoundFileMp3, mySoundFileogg]);
-    this.load.audio("sfx_weapon_pickup", [weaponPickup]);
-    this.load.audio("sfx_weapon_place", [weaponPlace]);
+    this.audio.preload([
+      { name: "_aud_weapon_pickup", src: weaponPickup },
+      { name: "_aud_weapon_place", src: weaponPlace },
+    ]);
   }
-
- 
 
   create() {
     this.text = this.add.text(10, 10, "", {
       font: "16px Arial",
       fill: "#ffffff",
     });
+
+    this.audio.create([
+      { name: "_aud_weapon_pickup" },
+      { name: "_aud_weapon_place" },
+    ]);
 
     // Register the update event to calculate the FPS
     // this.events.on('update', this.updateFps, this);
@@ -76,12 +80,8 @@ class Main extends Phaser.Scene {
 
     // update text object with current fps, cpu, and memory usage
     this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
-
   }
-
-
 }
-
 
 const config = {
   type: Phaser.AUTO,

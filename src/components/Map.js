@@ -6,7 +6,6 @@ export default function Map(scene) {
   let MappingData;
   let genesis = true;
   this.scene = scene;
-  var sfx = this.scene.sound.add("sfx_weapon_place");
 
   const isEligible = (tile) => {
     if (tile.tileproperties.type.includes("path")) {
@@ -55,7 +54,7 @@ export default function Map(scene) {
               tile.rectangle.destroy();
               const newWeapon = new Weapon(this.scene, tilePositon);
               newWeapon.createTile();
-              sfx.play();
+              this.scene.audio.play("_aud_weapon_place");
             } else {
               scene.input.setDefaultCursor("not-allowed");
             }
