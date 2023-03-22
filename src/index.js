@@ -24,6 +24,8 @@ class Main extends Phaser.Scene {
     this.load.audio("sfx_weapon_place", [weaponPlace]);
   }
 
+ 
+
   create() {
     this.text = this.add.text(10, 10, "", {
       font: "16px Arial",
@@ -74,8 +76,12 @@ class Main extends Phaser.Scene {
 
     // update text object with current fps, cpu, and memory usage
     this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
+
   }
+
+
 }
+
 
 const config = {
   type: Phaser.AUTO,
