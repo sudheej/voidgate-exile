@@ -2,32 +2,34 @@ import Tile from "./Tile";
 import Weapon from "./Weapon";
 import { weaponarray } from "../state/WeaponArray";
 
-export default function Map(scene) {
-  let MappingData;
-  let genesis = true;
-  this.scene = scene;
+export default class Map {
+  MappingData = [];
+  scene;
 
-  const isEligible = (tile) => {
+  constructor(scene) {
+    this.scene = scene;
+  }
+
+  isEligible = (tile) => {
     if (tile.tileproperties.type.includes("path")) {
       return false;
     }
     return true;
   };
 
-  this.createMap = function (mapOriginX, mapOriginY) {
-    scene.input.setDefaultCursor("grab");
-    //console.log(MappingData);
-    let mapHorizontalLength = MappingData.length;
-    let mapVerticalLength = MappingData[0].length;
+  createMap = (mapOriginX, mapOriginY) => {
+    this.scene.input.setDefaultCursor("grab");
+    let mapHorizontalLength = this.MappingData.length;
+    let mapVerticalLength = this.MappingData[0].length;
     let defaultColor = 0x80dfff;
+
     for (let vi = 0; vi < mapVerticalLength; vi++) {
       for (let hi = 0; hi < mapHorizontalLength; hi++) {
-        const TileProperties = {
-          ...MappingData[vi][hi],
-        };
+        const TileProperties = { ...this.MappingData[vi][hi] };
         const tile = new Tile(this.scene, TileProperties);
         tile.createTile();
         tile.rectangle.setInteractive();
+
         tile.rectangle.on("pointerover", () => {
           if (weaponarray.selectedproperty) {
             tile.rectangle.fillColor = 0xff0000;
@@ -35,7 +37,7 @@ export default function Map(scene) {
         });
 
         tile.rectangle.on("pointerout", () => {
-          scene.input.setDefaultCursor("grab");
+          this.scene.input.setDefaultCursor("grab");
 
           if (weaponarray.selectedproperty) {
             tile.rectangle.fillColor = defaultColor;
@@ -48,15 +50,14 @@ export default function Map(scene) {
             tilePositon._id = "actualweapon";
             tilePositon.x = tile.rectangle.x;
             tilePositon.y = tile.rectangle.y;
-            //console.log(tilePositon);
-            if (isEligible(tile)) {
-              //(tile.tileproperties);
+
+            if (this.isEligible(tile)) {
               tile.rectangle.destroy();
               const newWeapon = new Weapon(this.scene, tilePositon);
               newWeapon.createTile();
               this.scene.audio.play("_aud_weapon_place");
             } else {
-              scene.input.setDefaultCursor("not-allowed");
+              this.scene.input.setDefaultCursor("not-allowed");
             }
           }
         });
@@ -64,12 +65,11 @@ export default function Map(scene) {
     }
   };
 
-  Object.defineProperty(this, "MappingData", {
-    get: function () {
-      return MappingData;
-    },
-    set: function (value) {
-      MappingData = value;
-    },
-  });
+  setMappingData = (value) => {
+    this.MappingData = value;
+  };
+
+  get MappingData() {
+    return this.MappingData;
+  }
 }

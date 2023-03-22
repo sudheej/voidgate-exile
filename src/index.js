@@ -48,11 +48,11 @@ class Main extends Phaser.Scene {
     map.MappingData = plainmap;
     map.createMap(100, 100);
     const inventory = new Inventory(this);
-    inventory.createInvetory();
+    inventory.createInventory();
 
     const path = new Path(this);
     path.PathData = plainmap_path;
-    path.createPath(map.MappingData);
+
 
     var enemyPath = path.PathData[0];
 

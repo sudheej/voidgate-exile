@@ -1,28 +1,30 @@
 import Weapon from "./Weapon";
 import { weaponarray } from "../state/WeaponArray";
 
-export default function Inventory(scene) {
-  this.scene = scene;
+export default class Inventory {
+  constructor(scene) {
+    this.scene = scene;
+  }
+
+  createInventory() {
+    const weaponProperties = {
+      _id: "weapontimele",
+      x: 875,
+      y: 210,
+      height: 25,
+      width: 25,
+      type: "basic_gun",
+    };
+
+    const weapon = new Weapon(this.scene, weaponProperties);
+
+    weapon.rectangle.name = "actualname";
+    weapon.createTile();
+
+    weapon.rectangle.setInteractive();
+    weapon.rectangle.on("pointerdown", () => {
+      weaponarray.selectedproperty = weapon;
+      this.scene.audio.play("_aud_weapon_pickup");
+    });
+  }
 }
-
-Inventory.prototype.createInvetory = function () {
-  let WeaponProperties = {
-    _id: "weapontimele",
-    x: 875,
-    y: 210,
-    height: 25,
-    width: 25,
-    type: "basic_gun",
-  };
-
-  const weapon = new Weapon(this.scene, WeaponProperties);
-
-  weapon.rectangle.name = "actualname";
-  weapon.createTile();
-
-  weapon.rectangle.setInteractive();
-  weapon.rectangle.on("pointerdown", () => {
-    weaponarray.selectedproperty = weapon;
-    this.scene.audio.play("_aud_weapon_pickup");
-  });
-};
