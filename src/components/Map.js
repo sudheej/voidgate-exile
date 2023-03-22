@@ -6,6 +6,7 @@ export default function Map(scene) {
   let MappingData;
   let genesis = true;
   this.scene = scene;
+  var sfx = this.scene.sound.add("sfx_weapon_place");
 
   const isEligible = (tile) => {
     if (tile.tileproperties.type.includes("path")) {
@@ -45,6 +46,7 @@ export default function Map(scene) {
         tile.rectangle.on("pointerdown", () => {
           if (weaponarray.selectedproperty) {
             let tilePositon = weaponarray.selectedproperty.tileproperties;
+            tilePositon._id = "actualweapon";
             tilePositon.x = tile.rectangle.x;
             tilePositon.y = tile.rectangle.y;
             //console.log(tilePositon);
@@ -53,6 +55,7 @@ export default function Map(scene) {
               tile.rectangle.destroy();
               const newWeapon = new Weapon(this.scene, tilePositon);
               newWeapon.createTile();
+              sfx.play();
             } else {
               scene.input.setDefaultCursor("not-allowed");
             }

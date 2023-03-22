@@ -10,7 +10,8 @@ import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
 import mySoundFileMp3 from "./assets/audio/background-music.mp3";
 import mySoundFileogg from "./assets/audio/oggsound.ogg";
-import GlowFilterPostFx from "phaser3-rex-plugins/plugins/glowfilterpipeline.js";
+import weaponPickup from "./assets/audio/weapon_pickup.ogg";
+import weaponPlace from "./assets/audio/weapon_place.ogg";
 
 class Main extends Phaser.Scene {
   constructor() {
@@ -19,19 +20,20 @@ class Main extends Phaser.Scene {
 
   preload() {
     this.load.audio("theme", [mySoundFileMp3, mySoundFileogg]);
+    this.load.audio("sfx_weapon_pickup", [weaponPickup]);
+    this.load.audio("sfx_weapon_place", [weaponPlace]);
   }
 
  
 
   create() {
-
-    this.text = this.add.text(10, 10, '', {
-      font: '16px Arial',
-      fill: '#ffffff'
+    this.text = this.add.text(10, 10, "", {
+      font: "16px Arial",
+      fill: "#ffffff",
     });
 
     // Register the update event to calculate the FPS
-   // this.events.on('update', this.updateFps, this);
+    // this.events.on('update', this.updateFps, this);
 
     //var music = this.sound.add("theme");
 
@@ -57,24 +59,24 @@ class Main extends Phaser.Scene {
       .rectangle(enemyPath[0].x, enemyPath[0].y, 10, 10, 0xd0d7ff)
       .setName("enemy");
 
-    blue_bingili.setPostPipeline(GlowFilterPostFx);
-
     blue_bingili.setName("enemy");
 
     blue_bingili.name = "enemy";
     enemy.createEnemyWithPath(enemyPath, blue_bingili);
   }
 
-
   update(time, delta) {
     // calculate fps
     let fps = Math.round(1000 / delta);
 
     // calculate cpu and memory usage
-    let memory = Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024);
+    let memory = Math.round(
+      window.performance.memory.usedJSHeapSize / 1024 / 1024
+    );
 
     // update text object with current fps, cpu, and memory usage
     this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
+
   }
 
 

@@ -6,6 +6,7 @@ export default function Weapon(scene, weaponproperties) {
 }
 
 Weapon.prototype = Object.create(Tile.prototype);
+const ZONE_RADIUS = 60;
 
 let TARGET_ON_SIGHT = false;
 
@@ -87,6 +88,27 @@ function fireLaser(weapon, enemy, scene) {
 
 Weapon.prototype.createTile = function () {
   this.rectangle.setInteractive();
+
+
+  let graphics = this.scene.add.graphics();
+  graphics.lineStyle(2, 0x00ff00);
+
+  this.rectangle.on("pointerdown", (pointer) => {
+    // update the position of the circle and add it to the scene
+    if (this.rectangle.name === "weapontimele") {
+    } else {
+      graphics.clear();
+      graphics.strokeCircle(this.rectangle.x, this.rectangle.y, ZONE_RADIUS);
+      this.scene.add.existing(graphics);
+    }
+  });
+
+  this.rectangle.on("pointerout", () => {
+    // remove the circle from the scene
+    graphics.clear();
+    this.scene.children.remove(graphics);
+  });
+
   this.rectangle.name = this.tileproperties._id;
   let weaponHull = this.scene.add.existing(this.rectangle);
   let weaponPrimary = this.scene.add.line(
@@ -102,7 +124,7 @@ Weapon.prototype.createTile = function () {
   // iterate over the objects and log their names
 
   this.scene.time.addEvent({
-    delay: 500,
+    delay: 100,
     loop: true,
     callback: function () {
       tweenProgress += 0.5; // Increment the progress by the time elapsed since last update (16ms)

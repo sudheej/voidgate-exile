@@ -16,13 +16,14 @@ Inventory.prototype.createInvetory = function () {
   };
 
   const weapon = new Weapon(this.scene, WeaponProperties);
+  var sfx = this.scene.sound.add("sfx_weapon_pickup");
 
   weapon.rectangle.name = "actualname";
   weapon.createTile();
 
   weapon.rectangle.setInteractive();
-  //console.log(weapon);
   weapon.rectangle.on("pointerdown", () => {
     weaponarray.selectedproperty = weapon;
+    sfx.play();
   });
 };
