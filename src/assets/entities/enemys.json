@@ -1,0 +1,42 @@
+[
+    {
+        "name": "blue_bingili",
+        "shape": "rectangle",
+        "width": 10,
+        "height": 10,
+        "fillColor": "#0000ff",
+        "difficulty": 2,
+        "speed": 15,
+        "rotation": true
+      },
+      {
+        "name": "crimson_red",
+        "shape": "circle",
+        "width": 10,
+        "height": 10,
+        "fillColor": "#ff0000",
+        "difficulty": 2,
+        "speed": 17,
+        "rotation": false
+      },
+      {
+        "name": "straight_yellow",
+        "shape": "rectangle",
+        "width": 10,
+        "height": 10,
+        "fillColor": "#FFBF00",
+        "difficulty": 3,
+        "speed": 9,
+        "rotation": false
+      },
+      {
+        "name": "tri_reddy",
+        "shape": "triangle",
+        "width": 10,
+        "height": 10,
+        "fillColor": "#FFBF00",
+        "difficulty": 3,
+        "speed": 20,
+        "rotation": false
+      }
+]

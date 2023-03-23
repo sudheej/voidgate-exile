@@ -10,11 +10,30 @@ function Weapon(scene, weaponproperties) {
 Weapon.prototype = Object.create(Tile.prototype);
 
 function checkEnemyInZone(weaponShape, enemyShape, scene) {
-  const currentShape = new Phaser.Geom.Rectangle(weaponShape.x, weaponShape.y, weaponShape.width, weaponShape.height);
-  const givenShape = new Phaser.Geom.Rectangle(enemyShape.x, enemyShape.y, enemyShape.width, enemyShape.height);
-  const zone = new Phaser.Geom.Circle(currentShape.x, currentShape.y, ZONE_RADIUS);
+  const currentShape = new Phaser.Geom.Rectangle(
+    weaponShape.x,
+    weaponShape.y,
+    weaponShape.width,
+    weaponShape.height
+  );
+  const givenShape = new Phaser.Geom.Rectangle(
+    enemyShape.x,
+    enemyShape.y,
+    enemyShape.width,
+    enemyShape.height
+  );
+  const zone = new Phaser.Geom.Circle(
+    currentShape.x,
+    currentShape.y,
+    ZONE_RADIUS
+  );
 
-  const distance = Phaser.Math.Distance.Between(givenShape.centerX, givenShape.centerY, zone.x, zone.y);
+  const distance = Phaser.Math.Distance.Between(
+    givenShape.centerX,
+    givenShape.centerY,
+    zone.x,
+    zone.y
+  );
 
   if (distance < ZONE_RADIUS) {
     fireLaser(weaponShape, enemyShape, scene);
@@ -22,7 +41,12 @@ function checkEnemyInZone(weaponShape, enemyShape, scene) {
 }
 
 function fireLaser(weapon, enemy, scene) {
-  const distancefromenemy = Phaser.Math.Distance.Between(weapon.x, weapon.y, enemy.x, enemy.y);
+  const distancefromenemy = Phaser.Math.Distance.Between(
+    weapon.x,
+    weapon.y,
+    enemy.x,
+    enemy.y
+  );
   const laser = scene.add.line(weapon.x, weapon.y, distancefromenemy, 0, 0, 0);
   laser.lineWidth = 0.02;
   laser.setOrigin(0, 0);
@@ -36,7 +60,12 @@ function fireLaser(weapon, enemy, scene) {
     yoyo: true,
   });
 
-  laser.rotation = Phaser.Math.Angle.Between(weapon.x, weapon.y, enemy.x + scene.cameras.main.scrollX, enemy.y + scene.cameras.main.scrollY);
+  laser.rotation = Phaser.Math.Angle.Between(
+    weapon.x,
+    weapon.y,
+    enemy.x + scene.cameras.main.scrollX,
+    enemy.y + scene.cameras.main.scrollY
+  );
   laser.setTo(0, 0, distancefromenemy, 0);
 
   scene.time.delayedCall(20, () => laser.destroy());
@@ -65,7 +94,15 @@ Weapon.prototype.createTile = function () {
 
   this.rectangle.name = this.tileproperties._id;
   const weaponHull = this.scene.add.existing(this.rectangle);
-  const weaponPrimary = this.scene.add.line(this.tileproperties.x, this.tileproperties.y, 0, 0, 20, 0, 0xffffff);
+  const weaponPrimary = this.scene.add.line(
+    this.tileproperties.x,
+    this.tileproperties.y,
+    0,
+    0,
+    20,
+    0,
+    0xffffff
+  );
 
   let tweenProgress = 0;
   this.scene.time.addEvent({
