@@ -67,7 +67,14 @@ function fireLaser(weapon, enemy, scene) {
     enemy.y + scene.cameras.main.scrollY
   );
   laser.setTo(0, 0, distancefromenemy, 0);
-
+  if (enemy.health > 0) {
+    enemy.decreaseHealth(1)
+  }
+  else {
+    enemy.destroyEnemy()
+    enemy.destroy()
+  }
+ 
   scene.time.delayedCall(20, () => laser.destroy());
 }
 

@@ -8,10 +8,11 @@ import plainmap from "./assets/maps/plainfield.json";
 import plainmap_path from "./assets/maps/path/_path_plainfield.json";
 import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
-import enemy_list from "./assets/entities/enemys.json"
+import enemy_list from "./assets/entities/enemys.json";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
 import Audio from "./utilities/Audio";
+import blue from "./assets/effects/blue.png"
 
 const AUDIOS = [
   { name: "_aud_weapon_pickup", src: weaponPickup },
@@ -29,6 +30,7 @@ class Main extends Phaser.Scene {
 
   preload() {
     this.audio.preload(AUDIOS);
+    this.load.image('spark',blue)
   }
 
   create() {
@@ -51,30 +53,26 @@ class Main extends Phaser.Scene {
 
     const enemyPath = path.PathData[0];
 
- 
-
-    console.log(enemy_list)
-    enemy_list.map(enemyObj => {
+    console.log(enemy_list);
+    enemy_list.map((enemyObj) => {
       const enemy = new Enemy(this);
       enemy.createEnemyWithPath(enemyPath, enemyObj);
-    })
+    });
 
-    // const blue_bingili = this.add.rectangle(enemyPath[0].x, enemyPath[0].y, 10, 10, 0xd0d7ff);
-
-    // blue_bingili.name = "enemy";
-    // enemy.createEnemyWithPath(enemyPath, blue_bingili);
   }
 
   update(time, delta) {
     const fps = Math.round(1000 / delta);
-    const memory = Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024);
+    const memory = Math.round(
+      window.performance.memory.usedJSHeapSize / 1024 / 1024
+    );
 
     this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
   }
 }
 
 const config = {
-  type: Phaser.AUTO,
+  type: Phaser.WEBGL,
   backgroundColor: "#000000",
   parent: "game",
   width: 1000,
