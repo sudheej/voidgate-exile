@@ -1,6 +1,6 @@
 import Helper from "../utilities/Helper";
 import { Game } from "phaser";
-import {gameStore} from "../state/GameStore"
+import { gameStore } from "../state/GameStore";
 export default class Enemy {
   constructor(scene) {
     this.scene = scene;
@@ -102,8 +102,8 @@ export default class Enemy {
   }
 
   increaseMoney() {
-    gameStore.money += 20
-    console.log(gameStore.money)
+    gameStore.money += 20;
+    console.log(gameStore.money);
   }
 
   createEnemyWithPath(pathCoordinates, enemyObject) {

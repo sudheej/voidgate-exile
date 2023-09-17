@@ -1,35 +1,37 @@
-import {gameStore} from "../state/GameStore"
-import {autorun} from "mobx"
-import { observer } from 'mobx-react';
+import { gameStore } from "../state/GameStore";
+import { autorun } from "mobx";
+import { observer } from "mobx-react";
 export class ScoreBoard extends Phaser.GameObjects.Container {
-    constructor(scene, x, y, lives, money) {
-      super(scene, x, y);
-      
-      // Create text objects to display lives and money
-      //this.livesText = scene.add.text(0, 0, `Lives: ${lives}`, { fontSize: '24px', fill: '#FFF' });
-      this.moneyText = scene.add.text(0, 30, `Money: ${gameStore.money}`, { fontSize: '24px', fill: '#FFF' });
-      
-      // Add the text objects to the container
-      //this.add(this.livesText);
-      this.add(this.moneyText);
-      
-      // Add the container to the scene
+  constructor(scene, x, y, lives, money) {
+    super(scene, x, y);
 
-      this.setSize(200,50)
-      this.setX(800)
-      scene.add.existing(this);
+    // Create text objects to display lives and money
+    //this.livesText = scene.add.text(0, 0, `Lives: ${lives}`, { fontSize: '24px', fill: '#FFF' });
+    this.moneyText = scene.add.text(0, 30, `Money: ${gameStore.money}`, {
+      fontSize: "24px",
+      fill: "#FFF",
+    });
 
-      this.disposer = autorun(() => {
-        console.log("auto run starts")
-        this.moneyText.setText(`Money: ${gameStore.money}`);
-      })
-    }
+    // Add the text objects to the container
+    //this.add(this.livesText);
+    this.add(this.moneyText);
 
-    destroy() {
-        this.disposer();
-        super.destroy();
-    }
-    
+    // Add the container to the scene
+
+    this.setSize(200, 50);
+    this.setX(800);
+    scene.add.existing(this);
+
+    this.disposer = autorun(() => {
+      console.log("auto run starts");
+      this.moneyText.setText(`Money: ${gameStore.money}`);
+    });
   }
 
-  export default observer(ScoreBoard)
+  destroy() {
+    this.disposer();
+    super.destroy();
+  }
+}
+
+export default observer(ScoreBoard);
