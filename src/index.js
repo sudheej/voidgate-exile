@@ -12,7 +12,9 @@ import enemy_list from "./assets/entities/enemys.json";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
 import Audio from "./utilities/Audio";
-import blue from "./assets/effects/blue.png"
+import blue from "./assets/effects/blue.png";
+import {ScoreBoard} from "./components/ScoreBoard"
+
 
 const AUDIOS = [
   { name: "_aud_weapon_pickup", src: weaponPickup },
@@ -30,7 +32,8 @@ class Main extends Phaser.Scene {
 
   preload() {
     this.audio.preload(AUDIOS);
-    this.load.image('spark',blue)
+    this.load.image("spark", blue);
+ 
   }
 
   create() {
@@ -40,6 +43,9 @@ class Main extends Phaser.Scene {
     });
 
     this.audio.create(AUDIOS);
+   
+    const scoreBoard = new ScoreBoard(this);
+
 
     const map = new Map(this);
     map.MappingData = plainmap;
@@ -58,7 +64,6 @@ class Main extends Phaser.Scene {
       const enemy = new Enemy(this);
       enemy.createEnemyWithPath(enemyPath, enemyObj);
     });
-
   }
 
   update(time, delta) {

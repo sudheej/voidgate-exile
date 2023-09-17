@@ -43,9 +43,12 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.21.0",
     "husky": "^8.0.1",
     "mobx": "^6.6.2",
+    "mobx-react": "^7.6.0",
     "phaser": "^3.55.0",
-    "phaser3-rex-plugins": "^1.1.83"
+    "phaser3-rex-plugins": "^1.1.83",
+    "react-dom": "^18.2.0"
   }
 }

@@ -1,22 +1,20 @@
 import Helper from "../utilities/Helper";
+import { Game } from "phaser";
+import {gameStore} from "../state/GameStore"
 export default class Enemy {
   constructor(scene) {
     this.scene = scene;
     this.path = null;
     this.tweenProgress = 0;
     this.helper = new Helper();
-    this.health = 100
-    this.enemyAvatar = null
-    this.particles = this.scene.add.particles('spark');
-
-
+    this.health = 100;
+    this.enemyAvatar = null;
+    this.particles = this.scene.add.particles("spark");
   }
- 
 
- 
   createEnemy(scene, enemyObject, enemyPath) {
     let enemyShape;
-    
+
     let fillColor = parseInt(enemyObject.fillColor.slice(1), 16) || 0xffffff; // default fill color is white
     const PATH_START_X = enemyPath[0].x;
     const PATH_START_Y = enemyPath[0].y;
@@ -60,7 +58,7 @@ export default class Enemy {
     enemyShape.name = enemyObject.name || "Enemy";
     enemyShape.speed = enemyObject.speed || 1;
     //enemyShape.rotation = !!enemyObject.rotation; // convert the boolean value to a boolean type
-    
+
     // add a health bar on top of the enemy shape
     const healthBar = scene.add.rectangle(
       enemyShape.x,
@@ -78,35 +76,42 @@ export default class Enemy {
     enemyShape.healthBar = healthBar;
 
     enemyShape.decreaseHealth = (value) => {
-        enemyShape.health = Math.max(0, enemyShape.health  - value);
-        enemyShape.healthBar.setScale(enemyShape.health/100, 1);
-    }
+      enemyShape.health = Math.max(0, enemyShape.health - value);
+      enemyShape.healthBar.setScale(enemyShape.health / 100, 1);
+    };
 
     enemyShape.destroyEnemy = () => {
-        const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
+      const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
 
-        const emitterConfig = {
-            x: enemyShape.x,
-            y: enemyShape.y,
-            scale: { start: 0.05, end: 0 },
-            speed: { min: -100, max: 100 },
-            quantity: 50,
-            lifespan: 400,
-            blendMode: 'SCREEN'
-          };
+      const emitterConfig = {
+        x: enemyShape.x,
+        y: enemyShape.y,
+        scale: { start: 0.05, end: 0 },
+        speed: { min: -100, max: 100 },
+        quantity: 50,
+        lifespan: 400,
+        blendMode: "SCREEN",
+      };
 
-        const emitter = this.particles.createEmitter(emitterConfig);
-        emitter.explode();
-
-          
-    } 
+      const emitter = this.particles.createEmitter(emitterConfig);
+      emitter.explode();
+      this.increaseMoney();
+    };
 
     return enemyShape;
-}
+  }
 
+  increaseMoney() {
+    gameStore.money += 20
+    console.log(gameStore.money)
+  }
 
   createEnemyWithPath(pathCoordinates, enemyObject) {
-    this.enemyAvatar = this.createEnemy(this.scene, enemyObject, pathCoordinates);
+    this.enemyAvatar = this.createEnemy(
+      this.scene,
+      enemyObject,
+      pathCoordinates
+    );
 
     this.path = new Phaser.Curves.Path(
       pathCoordinates[0].x,
@@ -150,13 +155,12 @@ export default class Enemy {
         //     this.health = this.health - 1
         //     this.enemyAvatar.healthBar.setScale(this.health/100, 1);
         // }
-
       },
     });
   }
 
   get enemyHealth() {
-    return this.health
+    return this.health;
   }
 
   get enemyData() {
