@@ -12,6 +12,11 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
       fill: "#FFF",
     });
 
+    this.waveText = scene.add.text(10, 30, `Wave: ${gameStore.wave}`, {
+      fontSize: "24px",
+      fill: "#FFF",
+    });
+
     // Add the text objects to the container
     //this.add(this.livesText);
     this.add(this.moneyText);
@@ -23,8 +28,8 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
     scene.add.existing(this);
 
     this.disposer = autorun(() => {
-      console.log("auto run starts");
       this.moneyText.setText(`Money: ${gameStore.money}`);
+      this.waveText.setText(`Wave: ${gameStore.wave}`);
     });
   }
 

@@ -4,7 +4,7 @@ class GameStore {
   @observable money = 0;
   lives = 3;
   gameover = false;
-
+  @observable wave = 1;
   constructor() {
     makeAutoObservable(this);
   }
