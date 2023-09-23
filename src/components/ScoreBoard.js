@@ -7,7 +7,7 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
 
     // Create text objects to display lives and money
     //this.livesText = scene.add.text(0, 0, `Lives: ${lives}`, { fontSize: '24px', fill: '#FFF' });
-    this.moneyText = scene.add.text(0, 30, `Money: ${gameStore.money}`, {
+    this.moneyText = scene.add.text(0, 30, `Money: $${gameStore.money}`, {
       fontSize: "24px",
       fill: "#FFF",
     });
@@ -28,7 +28,7 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
     scene.add.existing(this);
 
     this.disposer = autorun(() => {
-      this.moneyText.setText(`Money: ${gameStore.money}`);
+      this.moneyText.setText(`Money: $${gameStore.money}`);
       this.waveText.setText(`Wave: ${gameStore.wave}`);
     });
   }

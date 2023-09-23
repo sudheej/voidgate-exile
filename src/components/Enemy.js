@@ -95,7 +95,7 @@ export default class Enemy {
 
       const emitter = this.particles.createEmitter(emitterConfig);
       emitter.explode();
-      this.health = 0
+      this.health = 0;
       this.increaseMoney();
     };
 

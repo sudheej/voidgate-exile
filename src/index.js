@@ -57,12 +57,11 @@ class Main extends Phaser.Scene {
     const path = new Path(this);
     path.PathData = plainmap_path;
 
-    const enemyPath = path.PathData[0];
+    this.enemyPath = path.PathData[0];
 
     console.log(enemy_list);
     //this.wave = new Wave(this);
-    this.wave.createWave(enemyPath);
-
+    this.wave.createWave(this.enemyPath);
   }
 
   update(time, delta) {
@@ -71,12 +70,14 @@ class Main extends Phaser.Scene {
       window.performance.memory.usedJSHeapSize / 1024 / 1024
     );
     this.wave.updateEnemyStatus();
-    if(this.wave.currentEnemies.length === 0) {
-      //gameStore.wave += 1
-    }  
-    this.text.setText(`FPS: ${fps} Memory: ${memory} MB enemies: ${this.wave.currentEnemies.length}`);
-   
-    
+    if (this.wave.wavestart && this.wave.currentEnemies.length === 0) {
+      gameStore.wave += 1
+      this.wave.wavestart = false
+      this.wave.createWave(this.enemyPath)
+    }
+    this.text.setText(
+      `FPS: ${fps} Memory: ${memory} MB Enemies: ${this.wave.currentEnemies.length}`
+    );
   }
 }
 
