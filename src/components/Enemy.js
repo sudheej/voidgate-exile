@@ -95,6 +95,7 @@ export default class Enemy {
 
       const emitter = this.particles.createEmitter(emitterConfig);
       emitter.explode();
+      this.health = 0;
       this.increaseMoney();
     };
 
@@ -103,7 +104,6 @@ export default class Enemy {
 
   increaseMoney() {
     gameStore.money += 20;
-    console.log(gameStore.money);
   }
 
   createEnemyWithPath(pathCoordinates, enemyObject) {

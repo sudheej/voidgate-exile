@@ -14,6 +14,8 @@ import weaponPlace from "./assets/audio/weapon_place.ogg";
 import Audio from "./utilities/Audio";
 import blue from "./assets/effects/blue.png";
 import { ScoreBoard } from "./components/ScoreBoard";
+import Wave from "./components/Wave";
+import { gameStore } from "./state/GameStore";
 
 const AUDIOS = [
   { name: "_aud_weapon_pickup", src: weaponPickup },
@@ -27,6 +29,7 @@ class Main extends Phaser.Scene {
   constructor() {
     super();
     this.audio = new Audio(this);
+    this.wave = new Wave(this);
   }
 
   preload() {
@@ -54,13 +57,11 @@ class Main extends Phaser.Scene {
     const path = new Path(this);
     path.PathData = plainmap_path;
 
-    const enemyPath = path.PathData[0];
+    this.enemyPath = path.PathData[0];
 
     console.log(enemy_list);
-    enemy_list.map((enemyObj) => {
-      const enemy = new Enemy(this);
-      enemy.createEnemyWithPath(enemyPath, enemyObj);
-    });
+    //this.wave = new Wave(this);
+    this.wave.createWave(this.enemyPath);
   }
 
   update(time, delta) {
@@ -68,8 +69,15 @@ class Main extends Phaser.Scene {
     const memory = Math.round(
       window.performance.memory.usedJSHeapSize / 1024 / 1024
     );
-
-    this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
+    this.wave.updateEnemyStatus();
+    if (this.wave.wavestart && this.wave.currentEnemies.length === 0) {
+      gameStore.wave += 1
+      this.wave.wavestart = false
+      this.wave.createWave(this.enemyPath)
+    }
+    this.text.setText(
+      `FPS: ${fps} Memory: ${memory} MB Enemies: ${this.wave.currentEnemies.length}`
+    );
   }
 }
 
