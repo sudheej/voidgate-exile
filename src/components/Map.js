@@ -1,6 +1,7 @@
 import Tile from "./Tile";
 import Weapon from "./Weapon";
 import { weaponarray } from "../state/WeaponArray";
+import { gameStore } from "../state/GameStore";
 
 export default class Map {
   MappingData = [];
@@ -9,13 +10,6 @@ export default class Map {
   constructor(scene) {
     this.scene = scene;
   }
-
-  isEligible = (tile) => {
-    if (tile.tileproperties.type.includes("path")) {
-      return false;
-    }
-    return true;
-  };
 
   createMap = (mapOriginX, mapOriginY) => {
     this.scene.input.setDefaultCursor("grab");
@@ -44,23 +38,52 @@ export default class Map {
           }
         });
 
-        tile.rectangle.on("pointerdown", () => {
-          if (weaponarray.selectedproperty) {
-            let tilePositon = weaponarray.selectedproperty.tileproperties;
-            tilePositon._id = "actualweapon";
-            tilePositon.x = tile.rectangle.x;
-            tilePositon.y = tile.rectangle.y;
 
-            if (this.isEligible(tile)) {
-              tile.rectangle.destroy();
-              const newWeapon = new Weapon(this.scene, tilePositon);
-              newWeapon.createTile();
-              this.scene.audio.play("_aud_weapon_place");
+        tile.rectangle.on("pointerdown", () => {
+          handleWeaponPlacement(this.scene);
+        });
+        
+        function handleWeaponPlacement(scene) {
+          if (weaponarray.selectedproperty) {
+            const tilePosition = weaponarray.selectedproperty.tileproperties;
+            tilePosition._id = "actualweapon";
+            tilePosition.x = tile.rectangle.x;
+            tilePosition.y = tile.rectangle.y;
+        
+            const weaponCost = tilePosition.cost;
+            if (isEligible(tile) && gameStore.money >= weaponCost) {
+              placeNewWeapon(scene,weaponCost);
             } else {
-              this.scene.input.setDefaultCursor("not-allowed");
+              handleInvalidPlacement(scene,weaponCost);
             }
           }
-        });
+        }
+        
+        function placeNewWeapon(scene,weaponCost) {
+          weaponarray.selectedproperty.rectangle.alpha = 1;
+          tile.rectangle.destroy();
+        
+          const newWeapon = new Weapon(scene, weaponarray.selectedproperty.tileproperties);
+          newWeapon.createTile();
+        
+          scene.audio.play("_aud_weapon_place");
+          gameStore.money -= weaponCost;
+        }
+        
+        function handleInvalidPlacement(scene,weaponCost) {
+          scene.input.setDefaultCursor("not-allowed");
+          if (gameStore.money <= weaponCost) {
+            weaponarray.selectedproperty.rectangle.alpha = 0.5;
+          }
+        }
+        
+        function isEligible(tile) {
+          if (tile.tileproperties.type.includes("path")) {
+            return false;
+          }
+          return true;
+        }
+
       }
     }
   };

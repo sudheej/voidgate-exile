@@ -71,9 +71,9 @@ class Main extends Phaser.Scene {
     );
     this.wave.updateEnemyStatus();
     if (this.wave.wavestart && this.wave.currentEnemies.length === 0) {
-      gameStore.wave += 1
-      this.wave.wavestart = false
-      this.wave.createWave(this.enemyPath)
+      gameStore.wave += 1;
+      this.wave.wavestart = false;
+      this.wave.createWave(this.enemyPath);
     }
     this.text.setText(
       `FPS: ${fps} Memory: ${memory} MB Enemies: ${this.wave.currentEnemies.length}`

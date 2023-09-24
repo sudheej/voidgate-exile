@@ -39,7 +39,19 @@ export default class Enemy {
         );
         break;
       case "triangle":
-        enemyShape = scene.add.triangle(
+       // scene.add.triangle()
+        enemyShape= scene.add.triangle(
+          PATH_START_X,         // X coordinate of the first point (top)
+          PATH_START_Y,         // Y coordinate of the first point (top)
+          0,                    // X coordinate of the second point (bottom-left)
+          10,                   // Y coordinate of the second point (bottom-left)
+          10,                   // X coordinate of the third point (bottom-right)
+          10,                   // Y coordinate of the third point (bottom-right)
+          5,                 // X coordinate of the fourth point (top-middle)
+          0,                    // Y coordinate of the fourth point (top-middle)
+          fillColor
+        );
+  /*       enemyShape = scene.add.triangle(
           PATH_START_X,
           PATH_START_Y,
           -25,
@@ -47,7 +59,7 @@ export default class Enemy {
           25,
           50,
           fillColor
-        );
+        ); */
         break;
       // add cases for other supported shapes if needed
       default:
