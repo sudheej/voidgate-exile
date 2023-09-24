@@ -38,52 +38,53 @@ export default class Map {
           }
         });
 
-
         tile.rectangle.on("pointerdown", () => {
           handleWeaponPlacement(this.scene);
         });
-        
+
         function handleWeaponPlacement(scene) {
           if (weaponarray.selectedproperty) {
             const tilePosition = weaponarray.selectedproperty.tileproperties;
             tilePosition._id = "actualweapon";
             tilePosition.x = tile.rectangle.x;
             tilePosition.y = tile.rectangle.y;
-        
+
             const weaponCost = tilePosition.cost;
             if (isEligible(tile) && gameStore.money >= weaponCost) {
-              placeNewWeapon(scene,weaponCost);
+              placeNewWeapon(scene, weaponCost);
             } else {
-              handleInvalidPlacement(scene,weaponCost);
+              handleInvalidPlacement(scene, weaponCost);
             }
           }
         }
-        
-        function placeNewWeapon(scene,weaponCost) {
+
+        function placeNewWeapon(scene, weaponCost) {
           weaponarray.selectedproperty.rectangle.alpha = 1;
           tile.rectangle.destroy();
-        
-          const newWeapon = new Weapon(scene, weaponarray.selectedproperty.tileproperties);
+
+          const newWeapon = new Weapon(
+            scene,
+            weaponarray.selectedproperty.tileproperties
+          );
           newWeapon.createTile();
-        
+
           scene.audio.play("_aud_weapon_place");
           gameStore.money -= weaponCost;
         }
-        
-        function handleInvalidPlacement(scene,weaponCost) {
+
+        function handleInvalidPlacement(scene, weaponCost) {
           scene.input.setDefaultCursor("not-allowed");
           if (gameStore.money <= weaponCost) {
             weaponarray.selectedproperty.rectangle.alpha = 0.5;
           }
         }
-        
+
         function isEligible(tile) {
           if (tile.tileproperties.type.includes("path")) {
             return false;
           }
           return true;
         }
-
       }
     }
   };

@@ -14,7 +14,7 @@ export default class Inventory {
       height: 25,
       width: 25,
       type: "basic_gun",
-      cost: "50"
+      cost: "50",
     };
 
     const weapon = new Weapon(this.scene, weaponProperties);
