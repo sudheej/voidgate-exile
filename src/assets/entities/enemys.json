@@ -31,5 +31,16 @@
     "speed": 9,
     "start_hp": 150,
     "rotation": false
+  },
+  {
+    "name": "ugly_green",
+    "shape": "triangle",
+    "width": 10,
+    "height": 10,
+    "fillColor": "#00B320",
+    "difficulty": 3,
+    "speed": 9,
+    "start_hp": 150,
+    "rotation": true
   }
 ]

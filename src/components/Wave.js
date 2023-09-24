@@ -19,10 +19,11 @@ export default class Wave {
     if (TotalCount < maxCount) {
       this.wavestart = false;
       this.createEnemies(enemy_list[randomIndex], TotalCount, enemyPath);
-    }
-    else
-    {
-      console.log("All waves completed, you have won the game , Total Enemies Killed " + TotalCount)
+    } else {
+      console.log(
+        "All waves completed, you have won the game , Total Enemies Killed " +
+          TotalCount
+      );
     }
   }
 
