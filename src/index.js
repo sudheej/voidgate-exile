@@ -16,14 +16,15 @@ import blue from "./assets/effects/blue.png";
 import { ScoreBoard } from "./components/ScoreBoard";
 import Wave from "./components/Wave";
 import { gameStore } from "./state/GameStore";
+import GlowFilterPipelinePlugin from 'phaser3-rex-plugins/plugins/glowfilterpipeline-plugin.js';
 
 const AUDIOS = [
   { name: "_aud_weapon_pickup", src: weaponPickup },
   { name: "_aud_weapon_place", src: weaponPlace },
 ];
 
-const MAP_WIDTH = 100;
-const MAP_HEIGHT = 100;
+const MAP_WIDTH = 200;
+const MAP_HEIGHT = 200;
 
 class Main extends Phaser.Scene {
   constructor() {
@@ -45,6 +46,7 @@ class Main extends Phaser.Scene {
 
     this.audio.create(AUDIOS);
 
+
     const scoreBoard = new ScoreBoard(this);
 
     const map = new Map(this);
@@ -62,6 +64,7 @@ class Main extends Phaser.Scene {
     console.log(enemy_list);
     //this.wave = new Wave(this);
     this.wave.createWave(this.enemyPath);
+
   }
 
   update(time, delta) {
@@ -90,6 +93,15 @@ const config = {
   mode: Phaser.Scale.FIT,
   autoCenter: Phaser.Scale.CENTER_BOTH,
   scene: Main,
+  plugins: {
+    global: [
+        {
+            key: 'rexGlowFilterPipeline',
+            plugin: GlowFilterPipelinePlugin,
+            start: true
+        }
+    ]
+}
 };
 
 const game = new Phaser.Game(config);

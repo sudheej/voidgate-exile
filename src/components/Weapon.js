@@ -48,6 +48,25 @@ function fireLaser(weapon, enemy, scene) {
     enemy.y
   );
   const laser = scene.add.line(weapon.x, weapon.y, distancefromenemy, 0, 0, 0);
+  if (Math.random() < 0.2) {
+
+    if (!scene.glowFilter) {
+      scene.glowFilter = scene.plugins.get('rexGlowFilterPipeline').add(laser, {
+          intensity: 0.05,
+          color: 0xffffff,
+          quality: 100
+      });
+  } else {
+      scene.plugins.get('rexGlowFilterPipeline').add(laser, {
+          intensity: 0.05,
+          color: 0xffffff,
+          quality: 100,
+          pipeline: scene.glowFilter.pipeline
+      });
+  }
+
+  }
+ 
   laser.lineWidth = 0.02;
   laser.setOrigin(0, 0);
   laser.setStrokeStyle(1, 0x05f9fb);
@@ -55,9 +74,12 @@ function fireLaser(weapon, enemy, scene) {
     targets: laser,
     alpha: 0,
     ease: "Cubic.easeOut",
-    duration: 40,
+    duration: 500,
     repeat: 0,
-    yoyo: true,
+    yoyo: false,
+    onComplete: function() {
+      laser.destroy()
+    }
   });
 
   laser.rotation = Phaser.Math.Angle.Between(

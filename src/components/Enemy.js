@@ -9,7 +9,6 @@ export default class Enemy {
     this.helper = new Helper();
     this.health = 100;
     this.enemyAvatar = null;
-    this.particles = this.scene.add.particles("spark");
   }
 
   createEnemy(scene, enemyObject, enemyPath) {
@@ -39,19 +38,19 @@ export default class Enemy {
         );
         break;
       case "triangle":
-       // scene.add.triangle()
-        enemyShape= scene.add.triangle(
-          PATH_START_X,         // X coordinate of the first point (top)
-          PATH_START_Y,         // Y coordinate of the first point (top)
-          0,                    // X coordinate of the second point (bottom-left)
-          10,                   // Y coordinate of the second point (bottom-left)
-          10,                   // X coordinate of the third point (bottom-right)
-          10,                   // Y coordinate of the third point (bottom-right)
-          5,                 // X coordinate of the fourth point (top-middle)
-          0,                    // Y coordinate of the fourth point (top-middle)
+        // scene.add.triangle()
+        enemyShape = scene.add.triangle(
+          PATH_START_X, // X coordinate of the first point (top)
+          PATH_START_Y, // Y coordinate of the first point (top)
+          0, // X coordinate of the second point (bottom-left)
+          10, // Y coordinate of the second point (bottom-left)
+          10, // X coordinate of the third point (bottom-right)
+          10, // Y coordinate of the third point (bottom-right)
+          5, // X coordinate of the fourth point (top-middle)
+          0, // Y coordinate of the fourth point (top-middle)
           fillColor
         );
-  /*       enemyShape = scene.add.triangle(
+        /*       enemyShape = scene.add.triangle(
           PATH_START_X,
           PATH_START_Y,
           -25,
@@ -94,19 +93,21 @@ export default class Enemy {
 
     enemyShape.destroyEnemy = () => {
       const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
-
-      const emitterConfig = {
-        x: enemyShape.x,
-        y: enemyShape.y,
-        scale: { start: 0.05, end: 0 },
-        speed: { min: -100, max: 100 },
-        quantity: 50,
-        lifespan: 400,
-        blendMode: "SCREEN",
-      };
-
-      const emitter = this.particles.createEmitter(emitterConfig);
+      const emitter = this.scene.add.particles(
+        enemyShape.x,
+        enemyShape.y,
+        "spark",
+        {
+          scale: { start: 0.06, end: 0 },
+          speed: { min: 100, max: 150 },
+          quantity: 50,
+          lifespan: 400,
+          blendMode: "ADD",
+          emitting: true,
+        }
+      );
       emitter.explode();
+      //this.scene.cameras.main.shake(100,0.001)
       this.health = 0;
       this.increaseMoney();
     };
