@@ -48,7 +48,7 @@
     "mobx": "^6.6.2",
     "mobx-react": "^9.0.1",
     "phaser": "^3.60.0",
-    "phaser3-rex-plugins": "^1.1.83",
+    "phaser3-rex-plugins": "^1.60.6",
     "react-dom": "^18.2.0"
   }
 }

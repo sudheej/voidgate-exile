@@ -48,44 +48,25 @@ function fireLaser(weapon, enemy, scene) {
     enemy.y
   );
   const laser = scene.add.line(weapon.x, weapon.y, distancefromenemy, 0, 0, 0);
+  if (Math.random() < 0.2) {
 
-  // add shader effect
- let shader = new Phaser.Display.BaseShader('glow', `
-precision mediump float;
+    if (!scene.glowFilter) {
+      scene.glowFilter = scene.plugins.get('rexGlowFilterPipeline').add(laser, {
+          intensity: 0.05,
+          color: 0xffffff,
+          quality: 100
+      });
+  } else {
+      scene.plugins.get('rexGlowFilterPipeline').add(laser, {
+          intensity: 0.05,
+          color: 0xffffff,
+          quality: 100,
+          pipeline: scene.glowFilter.pipeline
+      });
+  }
 
-uniform vec2      resolution;
-uniform float     time;
-uniform sampler2D uMainSampler;
-
-varying vec2 outTexCoord;
-
-void main(void)
-{
-    vec2 uv = outTexCoord.xy;
-    vec4 texColor = texture2D(uMainSampler, uv);
-
-    float strength = 1;
-    float glowRadius = 1;
-
-    vec4 sum = vec4(0);
-    vec2 texcoord = vec2(1.0 / resolution.x, 1.0 / resolution.y);
-    for(int xx = -4; xx <= 4; xx += 2)
-    {
-        for(int yy = -4; yy <= 4; yy += 2)
-        {
-            vec2 offset = vec2(float(xx), float(yy)) * glowRadius;
-            sum += texture2D(uMainSampler, uv + texcoord * offset) * strength;
-        }
-    }
-
-    gl_FragColor = sum * texColor;
-}
-`);
-
-//let pipeline = scene.sys.renderer.pipelines.add('Glow', shader);
-laser.setPipeline(shader); 
-
-  //laser.postFx.addBloom()
+  }
+ 
   laser.lineWidth = 0.02;
   laser.setOrigin(0, 0);
   laser.setStrokeStyle(1, 0x05f9fb);
@@ -93,9 +74,12 @@ laser.setPipeline(shader);
     targets: laser,
     alpha: 0,
     ease: "Cubic.easeOut",
-    duration: 40,
+    duration: 500,
     repeat: 0,
-    yoyo: true,
+    yoyo: false,
+    onComplete: function() {
+      laser.destroy()
+    }
   });
 
   laser.rotation = Phaser.Math.Angle.Between(
