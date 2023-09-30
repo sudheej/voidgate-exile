@@ -35,9 +35,12 @@ class Main extends Phaser.Scene {
   preload() {
     this.audio.preload(AUDIOS);
     this.load.image("spark", blue);
+    this.load.glsl('glowShader',"./assets/shaders/glow.glsl");
   }
 
   create() {
+
+
     this.text = this.add.text(10, 10, "", {
       font: "16px Arial",
       fill: "#ffffff",
@@ -62,6 +65,50 @@ class Main extends Phaser.Scene {
     console.log(enemy_list);
     //this.wave = new Wave(this);
     this.wave.createWave(this.enemyPath);
+
+    let r2 = this.add.line(900, 100, 0, 0, 140, 0, 0x9966ff);
+
+    // add shader effect
+   let shader = new Phaser.Display.BaseShader('glow', `
+  precision mediump float;
+  
+  uniform vec2      resolution;
+  uniform float     time;
+  uniform sampler2D uMainSampler;
+  
+  varying vec2 outTexCoord;
+  
+  void main(void)
+  {
+      vec2 uv = outTexCoord.xy;
+      vec4 texColor = texture2D(uMainSampler, uv);
+  
+      float strength = 1;
+      float glowRadius = 1;
+  
+      vec4 sum = vec4(0);
+      vec2 texcoord = vec2(1.0 / resolution.x, 1.0 / resolution.y);
+      for(int xx = -4; xx <= 4; xx += 2)
+      {
+          for(int yy = -4; yy <= 4; yy += 2)
+          {
+              vec2 offset = vec2(float(xx), float(yy)) * glowRadius;
+              sum += texture2D(uMainSampler, uv + texcoord * offset) * strength;
+          }
+      }
+  
+      gl_FragColor = sum * texColor;
+  }
+  `);
+  
+  r2.setLineWidth(10,10)
+
+  let pipeline = this.sys.renderer.pipelines.add('Glow', shader);
+  r2.setPipeline(pipeline); 
+  
+    //laser.postFx.addBloom()
+
+
   }
 
   update(time, delta) {
