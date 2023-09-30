@@ -99,6 +99,25 @@ function fireLaser(weapon, enemy, scene) {
   scene.time.delayedCall(20, () => laser.destroy());
 }
 
+function createWeaponGraphics(t) {
+
+ if (t.tileproperties.type === "basic_gun") {
+  return  t.scene.add.line(
+    t.tileproperties.x,
+    t.tileproperties.y,
+    0,
+    0,
+    20,
+    0,
+    0xffffff
+  );
+ }
+ else if (t.tileproperties.type === "homing_missile") {
+  return  t.scene.add.rectangle(t.tileproperties.x,t.tileproperties.y,10,10,0x000000)
+ }
+ 
+}
+
 Weapon.prototype.createTile = function () {
   this.rectangle.setInteractive();
 
@@ -118,19 +137,12 @@ Weapon.prototype.createTile = function () {
   this.rectangle.on("pointerout", () => {
     graphics.clear();
     this.scene.children.remove(graphics);
+
   });
 
   this.rectangle.name = this.tileproperties._id;
   const weaponHull = this.scene.add.existing(this.rectangle);
-  const weaponPrimary = this.scene.add.line(
-    this.tileproperties.x,
-    this.tileproperties.y,
-    0,
-    0,
-    20,
-    0,
-    0xffffff
-  );
+  const weaponPrimary = createWeaponGraphics(this)
 
   let tweenProgress = 0;
   this.scene.time.addEvent({
