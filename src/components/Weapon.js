@@ -2,8 +2,8 @@ import Tile from "./Tile";
 import { weaponarray } from "../state/WeaponArray";
 
 const ZONE_RADIUS = 60;
-const HOMING_TURN_DEGREES_PER_FRAME = 2.25
-const HOMING_MISSILE_SPEED = 5
+const HOMING_TURN_DEGREES_PER_FRAME = 2.25;
+const HOMING_MISSILE_SPEED = 5;
 
 function Weapon(scene, weaponproperties) {
   Tile.call(this, scene, weaponproperties);
@@ -37,86 +37,96 @@ function checkEnemyInZone(weaponShape, enemyShape, t) {
     zone.y
   );
 
-  
-
   if (distance < ZONE_RADIUS) {
-    fireWeapon(weaponShape, enemyShape, t);
+    if(enemyShape.active) {
+      fireWeapon(weaponShape, enemyShape, t);
+    }
+
   }
 }
 
-function fireWeapon(weaponShape,enemyShape,t) {
+function fireWeapon(weaponShape, enemyShape, t) {
   if (t.tileproperties.type === "basic_gun") {
     fireLaser(weaponShape, enemyShape, t.scene);
   } else if (t.tileproperties.type === "homing_missile") {
-    fireHomingMissile(weaponShape,enemyShape,t.scene);
+    fireHomingMissile(weaponShape, enemyShape, t.scene);
   }
-
 }
 
 function fireHomingMissile(weapon, enemy, scene) {
-  if (enemy.getData('locked') === "true" ) {
+  if (enemy.getData("locked") === "true" || weapon.getData("fired") === "true") {
     return;
   }
 
- 
+  let rocket = scene.add.rectangle(weapon.x, weapon.y, 8, 8, 0xff8c00);
+  weapon.setData("fired", "true");
 
-    let rocket = scene.add.rectangle(weapon.x, weapon.y,8,8, 0xff8c00)
-    rocket.setData('alive','true')
-  
- 
+  enemy.setData("locked", "true");
 
-  enemy.setData('locked','true')
-
-  scene.time.addEvent({
+ let timer = scene.time.addEvent({
     delay: 10,
     loop: true,
     callback: function () {
-      const targetAngle = Phaser.Math.Angle.Between(rocket.x, rocket.y, enemy.x, enemy.y)
-      let diff = Phaser.Math.Angle.Wrap(targetAngle - rocket.rotation)
-     
-      if (Math.abs(diff) < Phaser.Math.DegToRad(HOMING_TURN_DEGREES_PER_FRAME))
-      {
+      if (!enemy.active) {
+        rocket.destroy()
+        timer.remove();
+        return;
+      }
+      const targetAngle = Phaser.Math.Angle.Between(
+        rocket.x,
+        rocket.y,
+        enemy.x,
+        enemy.y
+      );
+      let diff = Phaser.Math.Angle.Wrap(targetAngle - rocket.rotation);
+
+      if (
+        Math.abs(diff) < Phaser.Math.DegToRad(HOMING_TURN_DEGREES_PER_FRAME)
+      ) {
         rocket.rotation = targetAngle;
-      }
-      else
-      {
-        let angle = rocket.angle
-        if (diff > 0)
-        {
+      } else {
+        let angle = rocket.angle;
+        if (diff > 0) {
           // turn clockwise
-          angle += HOMING_TURN_DEGREES_PER_FRAME
-        }
-        else
-        {
+          angle += HOMING_TURN_DEGREES_PER_FRAME;
+        } else {
           // turn counter-clockwise
-          angle -= HOMING_TURN_DEGREES_PER_FRAME
-        }
-        
-        rocket.setAngle(angle)
-      }
-        // move missile in direction facing
-      const vx = Math.cos(rocket.rotation) * HOMING_MISSILE_SPEED
-      const vy = Math.sin(rocket.rotation) * HOMING_MISSILE_SPEED
-    
-      
-        rocket.setX(rocket.x + vx)
-        rocket.setY(rocket.y + vy)
-    
-    
-        if(Math.abs(rocket.x - enemy.x) < 2 && Math.abs(rocket.y - enemy.y) < 2){
-            console.log("I am hit")
-            console.log(enemy.health)
-            if (enemy.health > 0) {
-              enemy.decreaseHealth(10);
-            } else {
-              enemy.destroyEnemy();
-              enemy.destroy();
-            }
-           rocket.destroy();
-            
-    
+          angle -= HOMING_TURN_DEGREES_PER_FRAME;
         }
 
+        rocket.setAngle(angle);
+      }
+      // move missile in direction facing
+      const vx = Math.cos(rocket.rotation) * HOMING_MISSILE_SPEED;
+      const vy = Math.sin(rocket.rotation) * HOMING_MISSILE_SPEED;
+
+      rocket.setX(rocket.x + vx);
+      rocket.setY(rocket.y + vy);
+
+      if (
+        Math.abs(rocket.x - enemy.x) < 2 &&
+        Math.abs(rocket.y - enemy.y) < 2
+      ) {
+       // console.log("I am hit");
+        rocket.destroy();
+       // console.log(enemy.health);
+        weapon.setData("fired", "false")
+        if (enemy.health > 0) {
+          enemy.decreaseHealth(10);
+          enemy.setData("locked", "false")
+        } else {
+
+          enemy.destroyEnemy();
+
+
+          enemy.destroy();
+
+
+
+        }
+        timer.remove()
+   
+      }
     }.bind(this),
   });
 }

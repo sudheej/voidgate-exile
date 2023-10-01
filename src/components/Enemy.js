@@ -91,26 +91,32 @@ export default class Enemy {
       enemyShape.healthBar.setScale(enemyShape.health / 100, 1);
     };
 
-    enemyShape.destroyEnemy = () => {
-      const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
-      const emitter = this.scene.add.particles(
-        enemyShape.x,
-        enemyShape.y,
-        "spark",
-        {
-          scale: { start: 0.06, end: 0 },
-          speed: { min: 100, max: 150 },
-          quantity: 50,
-          lifespan: 400,
-          blendMode: "ADD",
-          emitting: true,
-        }
-      );
-      emitter.explode();
-      //this.scene.cameras.main.shake(100,0.001)
-      this.health = 0;
-      this.increaseMoney();
-    };
+   
+      enemyShape.destroyEnemy = () => {
+
+        //const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
+        const emitter = this.scene.add.particles(
+          enemyShape.x,
+          enemyShape.y,
+          "spark",
+          {
+            scale: { start: 0.06, end: 0 },
+            speed: { min: 100, max: 150 },
+            quantity: 50,
+            lifespan: 400,
+            blendMode: "ADD",
+            emitting: true,
+          }
+        );
+        emitter.explode();
+        //this.scene.cameras.main.shake(100,0.001)
+        this.health = 0;
+        this.increaseMoney();
+        
+
+
+    }
+ 
 
     return enemyShape;
   }
