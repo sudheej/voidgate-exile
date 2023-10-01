@@ -1,7 +1,7 @@
 import { makeAutoObservable, observable } from "mobx";
 
 class GameStore {
-  @observable money = 1200;
+  @observable money = 5200;
   lives = 3;
   gameover = false;
   @observable wave = 1;

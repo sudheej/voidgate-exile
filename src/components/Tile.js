@@ -4,7 +4,9 @@ const TILE_COLOR = 0x80dfff;
 const PATH_COLOR = 0x000000;
 const START_PATH_TOP_GRADIENT_COLORS = [0x7cfc00, 0xadff2f, 0x000000, 0x000000];
 const END_PATH_RIGHT_GRADIENT_COLORS = [0x000000, 0xff0000, 0x000000, 0xff0000];
+//TO-DO below has to be shifted from here to weapon
 const BASIC_GUN_COLOR = 0x328720;
+const HOMING_MISSILE_COLOR = 0xff8c00;
 
 export default class Tile {
   constructor(scene, tileproperties) {
@@ -48,6 +50,8 @@ export default class Tile {
       this.scene.add.existing(entryGradient);
     } else if (this.tileproperties.type === "basic_gun") {
       this.rectangle.fillColor = BASIC_GUN_COLOR;
+    } else if (this.tileproperties.type === "homing_missile") {
+      this.rectangle.fillColor = HOMING_MISSILE_COLOR;
     } else {
       this.scene.add.existing(this.rectangle);
     }
