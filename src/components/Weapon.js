@@ -38,10 +38,9 @@ function checkEnemyInZone(weaponShape, enemyShape, t) {
   );
 
   if (distance < ZONE_RADIUS) {
-    if(enemyShape.active) {
+    if (enemyShape.active) {
       fireWeapon(weaponShape, enemyShape, t);
     }
-
   }
 }
 
@@ -54,35 +53,43 @@ function fireWeapon(weaponShape, enemyShape, t) {
 }
 
 function fireHomingMissile(weapon, enemy, scene) {
-  if (enemy.getData("locked") === "true" || weapon.getData("fired") === "true") {
-    return;
+  if (weapon.getData("fired") === "true" || enemy.getData("lockedBy") === weapon) {
+    return; // Enemy is already locked by this weapon, do not fire again.
   }
 
   let rocket = scene.add.rectangle(weapon.x, weapon.y, 8, 8, 0xff8c00);
+  scene.time.delayedCall(2500, () => {
+    if (rocket) {
+      rocket.destroy();
+    }
+  });
+
   weapon.setData("fired", "true");
 
-  enemy.setData("locked", "true");
+  enemy.setData("lockedBy", weapon); // Lock the enemy to this weapon.
 
- let timer = scene.time.addEvent({
-    delay: 10,
+  let timer = scene.time.addEvent({
+    delay: 13,
     loop: true,
     callback: function () {
-      if (!enemy.active) {
-        rocket.destroy()
+      if (!rocket || !enemy || rocket.active === false || enemy.active === false || enemy === null || rocket === null) {
+        // Check if either the missile or the enemy is no longer active or destroyed.
+        if (rocket) {
+          rocket.destroy();
+        }
+        if (enemy) {
+          enemy.setData("lockedBy", null); // Unlock the enemy from this weapon.
+        }
+        weapon.setData("fired", "false");
         timer.remove();
         return;
       }
-      const targetAngle = Phaser.Math.Angle.Between(
-        rocket.x,
-        rocket.y,
-        enemy.x,
-        enemy.y
-      );
+
+      // Rest of your missile guidance and collision detection code
+      const targetAngle = Phaser.Math.Angle.Between(rocket.x, rocket.y, enemy.x, enemy.y);
       let diff = Phaser.Math.Angle.Wrap(targetAngle - rocket.rotation);
 
-      if (
-        Math.abs(diff) < Phaser.Math.DegToRad(HOMING_TURN_DEGREES_PER_FRAME)
-      ) {
+      if (Math.abs(diff) < Phaser.Math.DegToRad(HOMING_TURN_DEGREES_PER_FRAME)) {
         rocket.rotation = targetAngle;
       } else {
         let angle = rocket.angle;
@@ -96,6 +103,7 @@ function fireHomingMissile(weapon, enemy, scene) {
 
         rocket.setAngle(angle);
       }
+
       // move missile in direction facing
       const vx = Math.cos(rocket.rotation) * HOMING_MISSILE_SPEED;
       const vy = Math.sin(rocket.rotation) * HOMING_MISSILE_SPEED;
@@ -103,29 +111,32 @@ function fireHomingMissile(weapon, enemy, scene) {
       rocket.setX(rocket.x + vx);
       rocket.setY(rocket.y + vy);
 
-      if (
-        Math.abs(rocket.x - enemy.x) < 2 &&
-        Math.abs(rocket.y - enemy.y) < 2
-      ) {
-       // console.log("I am hit");
+      if (Math.abs(rocket.x - enemy.x) < 2 && Math.abs(rocket.y - enemy.y) < 2) {
+/*         scene.tweens.add({
+          targets: enemy,
+          alpha: 0, // Fade out
+          duration: 50 / 2,
+          yoyo: true, // Reverse the animation
+          repeat: 1,
+        }); */
+
         rocket.destroy();
-       // console.log(enemy.health);
-        weapon.setData("fired", "false")
+        rocket = null;
+
+        weapon.setData("fired", "false");
         if (enemy.health > 0) {
           enemy.decreaseHealth(10);
-          enemy.setData("locked", "false")
+          enemy.setData("lockedBy", null);
         } else {
-
-          enemy.destroyEnemy();
-
-
-          enemy.destroy();
-
-
-
+          if (enemy !== null) {
+            enemy.destroyEnemy();
+            enemy.destroy();
+          }
         }
-        timer.remove()
-   
+
+        if (timer) {
+          timer.remove();
+        }
       }
     }.bind(this),
   });

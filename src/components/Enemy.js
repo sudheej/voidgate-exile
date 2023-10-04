@@ -15,7 +15,7 @@ export default class Enemy {
     let enemyShape;
 
     let fillColor = parseInt(enemyObject.fillColor.slice(1), 16) || 0xffffff; // default fill color is white
-    const PATH_START_X = enemyPath[0].x;
+    const PATH_START_X = enemyPath[0].x - 5 ;
     const PATH_START_Y = enemyPath[0].y;
     const HEALTH_BAR_HEIGHT = 3; // height of the health bar
 
@@ -91,10 +91,9 @@ export default class Enemy {
       enemyShape.healthBar.setScale(enemyShape.health / 100, 1);
     };
 
-   
-      enemyShape.destroyEnemy = () => {
-
-        //const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
+    enemyShape.destroyEnemy = () => {
+      //const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
+      if (enemyShape !== null ) {
         const emitter = this.scene.add.particles(
           enemyShape.x,
           enemyShape.y,
@@ -108,15 +107,16 @@ export default class Enemy {
             emitting: true,
           }
         );
-        emitter.explode();
-        //this.scene.cameras.main.shake(100,0.001)
-        this.health = 0;
-        this.increaseMoney();
-        
+        enemyShape?emitter.explode():"";
+        console.log(enemyShape)
+      
 
-
-    }
- 
+      }
+   
+      //this.scene.cameras.main.shake(100,0.001)
+      this.health = 0;
+      this.increaseMoney();
+    };
 
     return enemyShape;
   }
@@ -160,7 +160,7 @@ export default class Enemy {
     });
 
     this.scene.time.addEvent({
-      delay: 3 * enemyObject.speed,
+      delay: 5 * enemyObject.speed,
       loop: true,
       callback: () => {
         this.tweenProgress += 0.003;
@@ -168,6 +168,7 @@ export default class Enemy {
           this.tweenProgress -= 1;
         }
         const position = this.path.getPoint(this.tweenProgress);
+
         this.enemyAvatar.setPosition(position.x, position.y);
         this.enemyAvatar.healthBar.setPosition(position.x, position.y - 10);
         // if (this.health > 0) {
