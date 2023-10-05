@@ -3,7 +3,7 @@ import { weaponarray } from "../state/WeaponArray";
 
 const ZONE_RADIUS = 60;
 const HOMING_TURN_DEGREES_PER_FRAME = 2.25;
-const HOMING_MISSILE_SPEED = 5;
+const HOMING_MISSILE_SPEED = 4;
 
 function Weapon(scene, weaponproperties) {
   Tile.call(this, scene, weaponproperties);
@@ -53,12 +53,16 @@ function fireWeapon(weaponShape, enemyShape, t) {
 }
 
 function fireHomingMissile(weapon, enemy, scene) {
-  if (weapon.getData("fired") === "true" || enemy.getData("lockedBy") === weapon) {
+  if (
+    weapon.getData("fired") === "true" ||
+    enemy.getData("lockedBy") === weapon
+  ) {
     return; // Enemy is already locked by this weapon, do not fire again.
   }
 
   let rocket = scene.add.rectangle(weapon.x, weapon.y, 8, 8, 0xff8c00);
-  scene.time.delayedCall(2500, () => {
+
+  scene.time.delayedCall(3000, () => {
     if (rocket) {
       rocket.destroy();
     }
@@ -72,7 +76,14 @@ function fireHomingMissile(weapon, enemy, scene) {
     delay: 13,
     loop: true,
     callback: function () {
-      if (!rocket || !enemy || rocket.active === false || enemy.active === false || enemy === null || rocket === null) {
+      if (
+        !rocket ||
+        !enemy ||
+        rocket.active === false ||
+        enemy.active === false ||
+        enemy === null ||
+        rocket === null
+      ) {
         // Check if either the missile or the enemy is no longer active or destroyed.
         if (rocket) {
           rocket.destroy();
@@ -86,10 +97,17 @@ function fireHomingMissile(weapon, enemy, scene) {
       }
 
       // Rest of your missile guidance and collision detection code
-      const targetAngle = Phaser.Math.Angle.Between(rocket.x, rocket.y, enemy.x, enemy.y);
+      const targetAngle = Phaser.Math.Angle.Between(
+        rocket.x,
+        rocket.y,
+        enemy.x,
+        enemy.y
+      );
       let diff = Phaser.Math.Angle.Wrap(targetAngle - rocket.rotation);
 
-      if (Math.abs(diff) < Phaser.Math.DegToRad(HOMING_TURN_DEGREES_PER_FRAME)) {
+      if (
+        Math.abs(diff) < Phaser.Math.DegToRad(HOMING_TURN_DEGREES_PER_FRAME)
+      ) {
         rocket.rotation = targetAngle;
       } else {
         let angle = rocket.angle;
@@ -111,14 +129,31 @@ function fireHomingMissile(weapon, enemy, scene) {
       rocket.setX(rocket.x + vx);
       rocket.setY(rocket.y + vy);
 
-      if (Math.abs(rocket.x - enemy.x) < 2 && Math.abs(rocket.y - enemy.y) < 2) {
-/*         scene.tweens.add({
+      const smokey = scene.add.particles(rocket.x, rocket.y, 'flares',
+      {
+        frame: 'white',  
+        color: [ 0x040d61, 0xfacc22, 0xf89800, 0xf83600, 0x9f0404, 0x4b4a4f, 0x353438, 0x040404 ],
+          lifespan: 50,
+          angle: rocket.angle,
+          scale: 0.1,
+          speed: { min: 200, max: 300 },
+          blendMode: 'ADD',
+          advance: 2000,
+          duration: 50
+      });
+  
+
+      if (
+        Math.abs(rocket.x - enemy.x) < 3 &&
+        Math.abs(rocket.y - enemy.y) < 3
+      ) {
+               scene.tweens.add({
           targets: enemy,
           alpha: 0, // Fade out
-          duration: 50 / 2,
+          duration: 100,
           yoyo: true, // Reverse the animation
           repeat: 1,
-        }); */
+        }); 
 
         rocket.destroy();
         rocket = null;

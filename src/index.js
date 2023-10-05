@@ -13,6 +13,8 @@ import weaponPickup from "./assets/audio/weapon_pickup.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
 import Audio from "./utilities/Audio";
 import blue from "./assets/effects/blue.png";
+import flarePng from "./assets/effects/flares.png"
+import flareJson from "./assets/effects/flares.json"
 import { ScoreBoard } from "./components/ScoreBoard";
 import Wave from "./components/Wave";
 import { gameStore } from "./state/GameStore";
@@ -36,6 +38,7 @@ class Main extends Phaser.Scene {
   preload() {
     this.audio.preload(AUDIOS);
     this.load.image("spark", blue);
+    this.load.atlas('flares', flarePng, flareJson);
   }
 
   create() {
