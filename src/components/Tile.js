@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
-const TILE_COLOR = 0x80dfff;
+//const TILE_COLOR = 0x80dfff;
+const TILE_COLOR = 0x343434;
 const PATH_COLOR = 0x000000;
 const START_PATH_TOP_GRADIENT_COLORS = [0x7cfc00, 0xadff2f, 0x000000, 0x000000];
 const END_PATH_RIGHT_GRADIENT_COLORS = [0x000000, 0xff0000, 0x000000, 0xff0000];
