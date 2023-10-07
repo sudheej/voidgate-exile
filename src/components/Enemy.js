@@ -15,7 +15,7 @@ export default class Enemy {
     let enemyShape;
 
     let fillColor = parseInt(enemyObject.fillColor.slice(1), 16) || 0xffffff; // default fill color is white
-    const PATH_START_X = enemyPath[0].x - 5;
+    const PATH_START_X = enemyPath[0].x;
     const PATH_START_Y = enemyPath[0].y;
     const HEALTH_BAR_HEIGHT = 3; // height of the health bar
 
@@ -107,8 +107,9 @@ export default class Enemy {
             emitting: true,
           }
         );
+        this.scene.audio.play("_aud_explosion");
         enemyShape ? emitter.explode() : "";
-        console.log(enemyShape);
+   
       }
 
       //this.scene.cameras.main.shake(100,0.001)

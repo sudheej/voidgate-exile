@@ -10,23 +10,25 @@ import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
 import enemy_list from "./assets/entities/enemys.json";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
+import explosion from "./assets/audio/explosion.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
 import Audio from "./utilities/Audio";
 import blue from "./assets/effects/blue.png";
-import flarePng from "./assets/effects/flares.png"
-import flareJson from "./assets/effects/flares.json"
+import flarePng from "./assets/effects/flares.png";
+import flareJson from "./assets/effects/flares.json";
 import { ScoreBoard } from "./components/ScoreBoard";
 import Wave from "./components/Wave";
 import { gameStore } from "./state/GameStore";
-import GlowFilterPipelinePlugin from 'phaser3-rex-plugins/plugins/glowfilterpipeline-plugin.js';
+import GlowFilterPipelinePlugin from "phaser3-rex-plugins/plugins/glowfilterpipeline-plugin.js";
 
 const AUDIOS = [
   { name: "_aud_weapon_pickup", src: weaponPickup },
+  { name: "_aud_explosion", src: explosion },
   { name: "_aud_weapon_place", src: weaponPlace },
 ];
 
-const MAP_WIDTH = 200;
-const MAP_HEIGHT = 200;
+const MAP_WIDTH = 300;
+const MAP_HEIGHT = 300;
 
 class Main extends Phaser.Scene {
   constructor() {
@@ -38,7 +40,7 @@ class Main extends Phaser.Scene {
   preload() {
     this.audio.preload(AUDIOS);
     this.load.image("spark", blue);
-    this.load.atlas('flares', flarePng, flareJson);
+    this.load.atlas("flares", flarePng, flareJson);
   }
 
   create() {
@@ -48,7 +50,6 @@ class Main extends Phaser.Scene {
     });
 
     this.audio.create(AUDIOS);
-
 
     const scoreBoard = new ScoreBoard(this);
 
@@ -64,10 +65,9 @@ class Main extends Phaser.Scene {
 
     this.enemyPath = path.PathData[0];
 
-    console.log(enemy_list);
+  
     //this.wave = new Wave(this);
     this.wave.createWave(this.enemyPath);
-
   }
 
   update(time, delta) {
@@ -98,13 +98,13 @@ const config = {
   scene: Main,
   plugins: {
     global: [
-        {
-            key: 'rexGlowFilterPipeline',
-            plugin: GlowFilterPipelinePlugin,
-            start: true
-        }
-    ]
-}
+      {
+        key: "rexGlowFilterPipeline",
+        plugin: GlowFilterPipelinePlugin,
+        start: true,
+      },
+    ],
+  },
 };
 
 const game = new Phaser.Game(config);

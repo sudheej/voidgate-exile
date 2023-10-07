@@ -13,7 +13,6 @@ export default class Wave {
   createWave(enemyPath) {
     let currentCount = 5;
     let maxCount = 50;
-    console.log(gameStore.wave);
     const randomIndex = Math.floor(Math.random() * enemy_list.length);
     let TotalCount = currentCount * gameStore.wave;
     if (TotalCount < maxCount) {

@@ -15,7 +15,7 @@ export default class Map {
     this.scene.input.setDefaultCursor("grab");
     let mapHorizontalLength = this.MappingData.length;
     let mapVerticalLength = this.MappingData[0].length;
-    let defaultColor = 0x80dfff;
+    let defaultColor = 0x343434;
 
     for (let vi = 0; vi < mapVerticalLength; vi++) {
       for (let hi = 0; hi < mapHorizontalLength; hi++) {
