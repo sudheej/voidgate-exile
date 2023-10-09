@@ -4,27 +4,19 @@ import fireLaser from "./WeaponFiringAction/FireLaser"
 import fireHomingMissile from "./WeaponFiringAction/FireHomingMissile"
 
 const ZONE_RADIUS = 60;
-const HOMING_TURN_DEGREES_PER_FRAME = 2.25;
-const HOMING_MISSILE_SPEED = 3;
+
 
 function Weapon(scene, weaponproperties) {
   Tile.call(this, scene, weaponproperties);
 }
 
 Weapon.prototype = Object.create(Tile.prototype);
-
-function checkEnemyInZone(weaponShape, enemyShape, t) {
+function checkEnemyInZone(weaponShape, enemyObjects, t) {
   const currentShape = new Phaser.Geom.Rectangle(
     weaponShape.x,
     weaponShape.y,
     weaponShape.width,
     weaponShape.height
-  );
-  const givenShape = new Phaser.Geom.Rectangle(
-    enemyShape.x,
-    enemyShape.y,
-    enemyShape.width,
-    enemyShape.height
   );
   const zone = new Phaser.Geom.Circle(
     currentShape.x,
@@ -32,19 +24,55 @@ function checkEnemyInZone(weaponShape, enemyShape, t) {
     ZONE_RADIUS
   );
 
-  const distance = Phaser.Math.Distance.Between(
-    givenShape.centerX,
-    givenShape.centerY,
-    zone.x,
-    zone.y
-  );
+  // Calculate distances between weapon and each enemy object in zone
+  const distances = enemyObjects.map((enemy) => {
+    const givenShape = new Phaser.Geom.Rectangle(
+      enemy.x,
+      enemy.y,
+      enemy.width,
+      enemy.height
+    );
+    const distance = Phaser.Math.Distance.Between(
+      givenShape.centerX,
+      givenShape.centerY,
+      zone.x,
+      zone.y
+    );
+    return { enemy, distance };
+  });
 
-  if (distance < ZONE_RADIUS) {
-    if (enemyShape.active) {
-      fireWeapon(weaponShape, enemyShape, t);
-    }
+  // Choose an enemy based on the specified strategy
+  const strategy = "nearest"
+  const selectedEnemy = chooseEnemy(enemyObjects, distances, strategy);
+
+  if (selectedEnemy && selectedEnemy.active) {
+    fireWeapon(weaponShape, selectedEnemy, t);
   }
 }
+
+function chooseEnemy(enemyObjects, distances, strategy) {
+  let selectedEnemy;
+  if (strategy === "nearest") {
+    selectedEnemy = distances
+      .filter(({ distance }) => distance < ZONE_RADIUS)
+      .sort((a, b) => a.distance - b.distance)
+      .map(({ enemy }) => enemy)
+      .shift();
+  } else if (strategy === "lowestHealth") {
+    selectedEnemy = enemyObjects
+      .filter((enemy) => {
+        const distance = distances.find(
+          ({ enemy: e }) => e === enemy
+        ).distance;
+        return enemy.active && enemy.health >= 0 && distance < ZONE_RADIUS;
+      })
+      .sort((a, b) => a.health - b.health)
+      .shift();
+  }
+
+  return selectedEnemy;
+}
+
 
 function fireWeapon(weaponShape, enemyShape, t) {
   if (t.tileproperties.type === "basic_gun") {
@@ -104,21 +132,16 @@ Weapon.prototype.createTile = function () {
   const weaponHull = this.scene.add.existing(this.rectangle);
   const weaponPrimary = createWeaponGraphics(this);
 
-  let tweenProgress = 0;
+
   this.scene.time.addEvent({
     delay: 100,
     loop: true,
     callback: function () {
-      tweenProgress += 0.5;
-      if (tweenProgress > 1) {
-        tweenProgress -= 1;
-      }
-
       const objects = this.scene.children.getAll();
       const enemyObjects = objects.filter((obj) => obj.name === "enemy");
-      enemyObjects.forEach((enemy) => {
-        checkEnemyInZone(weaponHull, enemy, this);
-      });
+
+       checkEnemyInZone(weaponHull,enemyObjects,this)
+
     }.bind(this),
   });
 
