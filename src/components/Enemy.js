@@ -109,7 +109,6 @@ export default class Enemy {
         );
         this.scene.audio.play("_aud_explosion");
         enemyShape ? emitter.explode() : "";
-   
       }
 
       //this.scene.cameras.main.shake(100,0.001)

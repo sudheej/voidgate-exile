@@ -65,7 +65,6 @@ class Main extends Phaser.Scene {
 
     this.enemyPath = path.PathData[0];
 
-  
     //this.wave = new Wave(this);
     this.wave.createWave(this.enemyPath);
   }
