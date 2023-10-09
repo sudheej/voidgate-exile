@@ -91,6 +91,26 @@ export default class Enemy {
       enemyShape.healthBar.setScale(enemyShape.health / 100, 1);
     };
 
+     enemyShape.stun = (duration) => {
+      enemyShape.setData("stunned",true) 
+      const startTime = performance.now();
+      const animate = (currentTime) => {
+        if (currentTime - startTime >= duration) {
+          enemyShape.setData("stunned",false)
+        } else {
+          requestAnimationFrame(animate);
+        }
+      };
+      requestAnimationFrame(animate);
+    } 
+
+ /*    enemyShape.stun = (duration) => {
+      enemyShape.setData("stunned",true) 
+      setTimeout(() => {
+        enemyShape.setData("stunned",false) ;
+      }, duration);
+    } */
+
     enemyShape.destroyEnemy = () => {
       //const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
       if (enemyShape !== null) {
@@ -161,14 +181,22 @@ export default class Enemy {
       delay: 4 * enemyObject.speed,
       loop: true,
       callback: () => {
-        this.tweenProgress += 0.003;
-        if (this.tweenProgress > 1) {
-          this.tweenProgress -= 1;
-        }
-        const position = this.path.getPoint(this.tweenProgress);
 
-        this.enemyAvatar.setPosition(position.x, position.y);
-        this.enemyAvatar.healthBar.setPosition(position.x, position.y - 10);
+
+          if(!this.enemyAvatar.getData("stunned")) {
+            this.tweenProgress += 0.003;
+            if (this.tweenProgress > 1) {
+              this.tweenProgress -= 1;
+            }
+            const position = this.path.getPoint(this.tweenProgress);
+            
+            this.enemyAvatar.setPosition(position.x, position.y);
+            this.enemyAvatar.healthBar.setPosition(position.x, position.y - 10);
+
+          }
+      
+
+       
         // if (this.health > 0) {
         //     this.health = this.health - 1
         //     this.enemyAvatar.healthBar.setScale(this.health/100, 1);

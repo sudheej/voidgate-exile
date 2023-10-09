@@ -2,6 +2,7 @@ import Tile from "./Tile";
 import { weaponarray } from "../state/WeaponArray";
 import fireLaser from "./WeaponFiringAction/FireLaser"
 import fireHomingMissile from "./WeaponFiringAction/FireHomingMissile"
+import fireStunGun from "./WeaponFiringAction/FireStunGun";
 
 const ZONE_RADIUS = 60;
 
@@ -75,10 +76,13 @@ function chooseEnemy(enemyObjects, distances, strategy) {
 
 
 function fireWeapon(weaponShape, enemyShape, t) {
+  weaponShape.setData("damage", t.tileproperties.damage);
   if (t.tileproperties.type === "basic_gun") {
     fireLaser(weaponShape, enemyShape, t.scene)
   } else if (t.tileproperties.type === "homing_missile") {
     fireHomingMissile(weaponShape, enemyShape, t.scene);
+  } else if (t.tileproperties.type === "stun_gun") {
+    fireStunGun(weaponShape, enemyShape, t.scene);
   }
 }
 
@@ -102,6 +106,16 @@ function createWeaponGraphics(t) {
       t.tileproperties.y,
       10,
       10,
+      0x000000
+    );
+  }
+  else if (t.tileproperties.type === "stun_gun") {
+    return t.scene.add.star(
+      t.tileproperties.x,
+      t.tileproperties.y,
+      8,
+      4,
+      9,
       0x000000
     );
   }

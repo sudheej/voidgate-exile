@@ -18,7 +18,7 @@ export default function fireLaser(weapon, enemy, scene) {
   handleLaserGlow(scene, laser);
 
   if (enemy.health > 0) {
-    enemy.decreaseHealth(1);
+    enemy.decreaseHealth(weapon.getData("damage"))
   } else {
     enemy.destroyEnemy();
     enemy.destroy();

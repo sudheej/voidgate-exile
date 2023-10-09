@@ -8,6 +8,7 @@ const END_PATH_RIGHT_GRADIENT_COLORS = [0x000000, 0xff0000, 0x000000, 0xff0000];
 //TO-DO below has to be shifted from here to weapon
 const BASIC_GUN_COLOR = 0x328720;
 const HOMING_MISSILE_COLOR = 0xff8c00;
+const STUN_GUN_COLOR = 0x05C3DD;
 
 export default class Tile {
   constructor(scene, tileproperties) {
@@ -53,7 +54,10 @@ export default class Tile {
       this.rectangle.fillColor = BASIC_GUN_COLOR;
     } else if (this.tileproperties.type === "homing_missile") {
       this.rectangle.fillColor = HOMING_MISSILE_COLOR;
-    } else {
+    } else if (this.tileproperties.type === "stun_gun") {
+      this.rectangle.fillColor = STUN_GUN_COLOR;
+    }  
+    else {
       this.scene.add.existing(this.rectangle);
     }
   }

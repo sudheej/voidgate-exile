@@ -16,6 +16,7 @@ export default class Inventory {
         width: 25,
         type: "basic_gun",
         cost: "50",
+        damage: "1"
       },
       {
         _id: "weapontimele",
@@ -25,6 +26,17 @@ export default class Inventory {
         width: 25,
         type: "homing_missile",
         cost: "250",
+        damage: "30"
+      },
+      {
+        _id: "weapontimele",
+        x: 825,
+        y: 260,
+        height: 25,
+        width: 25,
+        type: "stun_gun",
+        cost: "100",
+        damage: "1"
       },
     ];
 
