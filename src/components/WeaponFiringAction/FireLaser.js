@@ -1,4 +1,7 @@
 export default function fireLaser(weapon, enemy, scene) {
+
+ 
+
   const distanceFromEnemy = Phaser.Math.Distance.Between(
     weapon.x,
     weapon.y,
@@ -18,7 +21,7 @@ export default function fireLaser(weapon, enemy, scene) {
   handleLaserGlow(scene, laser);
 
   if (enemy.health > 0) {
-    enemy.decreaseHealth(weapon.getData("damage"))
+    enemy.decreaseHealth(weapon.getData("damage"));
   } else {
     enemy.destroyEnemy();
     enemy.destroy();
@@ -28,10 +31,13 @@ export default function fireLaser(weapon, enemy, scene) {
 }
 
 function createLaser(weapon, distance, scene) {
+
+  const LASER_COLOR = 0x32CD32
+
   const laser = scene.add.line(weapon.x, weapon.y, distance, 0, 0, 0);
   laser.lineWidth = 0.02;
   laser.setOrigin(0, 0);
-  laser.setStrokeStyle(1, 0x05f9fb);
+  laser.setStrokeStyle(1, LASER_COLOR);
 
   const tween = scene.tweens.add({
     targets: laser,
