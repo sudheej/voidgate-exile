@@ -1,9 +1,11 @@
 import Weapon from "./Weapon";
 import { weaponarray } from "../state/WeaponArray";
+import GameText from "../utilities/GameText"
 
 export default class Inventory {
   constructor(scene) {
     this.scene = scene;
+    this.gameText = new GameText();
   }
 
   createInventory() {
@@ -40,6 +42,11 @@ export default class Inventory {
       },
     ];
 
+    //const weaponInventoryOuterBoundary = this.scene.add.rectangle(870,280,150,200,0xFF0000)
+    const weaponInventoryOuterBoundary = this.scene.add.graphics()
+    weaponInventoryOuterBoundary.fillStyle(0x00ff00, 0.1)
+    weaponInventoryOuterBoundary.fillRect(776, 180, 150, 200);
+    this.gameText.writeText(this.scene,810,150,"Tower",20);
     weaponProperties.map((x) => {
       const weapon = new Weapon(this.scene, x);
 

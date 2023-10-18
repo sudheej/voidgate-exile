@@ -41,6 +41,7 @@ class Main extends Phaser.Scene {
     this.audio.preload(AUDIOS);
     this.load.image("spark", blue);
     this.load.atlas("flares", flarePng, flareJson);
+    this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
   }
 
   create() {

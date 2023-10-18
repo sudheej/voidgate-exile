@@ -1,6 +1,5 @@
 export default function fireStunGun(weapon, enemy, scene) {
-  if(Math.random() < 0.9)
-  return;
+  if (Math.random() < 0.9) return;
 
   const distanceFromEnemy = Phaser.Math.Distance.Between(
     weapon.x,

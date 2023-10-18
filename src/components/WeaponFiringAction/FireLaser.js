@@ -1,7 +1,4 @@
 export default function fireLaser(weapon, enemy, scene) {
-
- 
-
   const distanceFromEnemy = Phaser.Math.Distance.Between(
     weapon.x,
     weapon.y,
@@ -31,8 +28,7 @@ export default function fireLaser(weapon, enemy, scene) {
 }
 
 function createLaser(weapon, distance, scene) {
-
-  const LASER_COLOR = 0x32CD32
+  const LASER_COLOR = 0x32cd32;
 
   const laser = scene.add.line(weapon.x, weapon.y, distance, 0, 0, 0);
   laser.lineWidth = 0.02;
