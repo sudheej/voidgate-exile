@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Helper from "../utilities/Helper";
 
 //const TILE_COLOR = 0x80dfff;
-const TILE_COLOR = 0x4DD4CA;
+const TILE_COLOR = 0x4dd4ca;
 const PATH_COLOR = 0x000000;
 const START_PATH_TOP_GRADIENT_COLORS = [0x7cfc00, 0xadff2f, 0x000000, 0x000000];
 const END_PATH_RIGHT_GRADIENT_COLORS = [0x000000, 0xff0000, 0x000000, 0xff0000];
@@ -30,18 +30,17 @@ export default class Tile {
     this.tileproperties = tileproperties;
   }
 
-  setBorders(rect,color) {
-    rect.setStrokeStyle(1,color)
+  setBorders(rect, color) {
+    rect.setStrokeStyle(1, color);
   }
-
 
   createTile() {
     this.rectangle.setStrokeStyle(1);
     let entryGradient = new Phaser.GameObjects.Graphics(this.scene);
     if (this.tileproperties.type === "path") {
       this.rectangle.setFillStyle(PATH_COLOR);
-    }
-    else if (this.tileproperties.type === "start_path_top") {
+      
+    } else if (this.tileproperties.type === "start_path_top") {
       this.rectangle.fillColor = PATH_COLOR;
       entryGradient.fillGradientStyle(...START_PATH_TOP_GRADIENT_COLORS, 1);
       entryGradient.fillRect(
@@ -63,18 +62,28 @@ export default class Tile {
       this.scene.add.existing(entryGradient);
     } else if (this.tileproperties.type === "basic_gun") {
       this.rectangle.fillColor = BASIC_GUN_COLOR;
-      this.rectangle.fillAlpha = 1
-      this.setBorders(this.rectangle,this.helper.adjustShade(BASIC_GUN_COLOR, BORDER_SHADE_INTENSITY))
+      this.rectangle.fillAlpha = 1;
+      this.setBorders(
+        this.rectangle,
+        this.helper.adjustShade(BASIC_GUN_COLOR, BORDER_SHADE_INTENSITY)
+      );
     } else if (this.tileproperties.type === "homing_missile") {
       this.rectangle.fillColor = HOMING_MISSILE_COLOR;
-      this.rectangle.fillAlpha = 1
-      this.setBorders(this.rectangle,this.helper.adjustShade(HOMING_MISSILE_COLOR, BORDER_SHADE_INTENSITY))
+      this.rectangle.fillAlpha = 1;
+      this.setBorders(
+        this.rectangle,
+        this.helper.adjustShade(HOMING_MISSILE_COLOR, BORDER_SHADE_INTENSITY)
+      );
     } else if (this.tileproperties.type === "stun_gun") {
       this.rectangle.fillColor = STUN_GUN_COLOR;
-      this.rectangle.fillAlpha = 1
-      this.setBorders(this.rectangle,this.helper.adjustShade(STUN_GUN_COLOR, BORDER_SHADE_INTENSITY))
+      this.rectangle.fillAlpha = 1;
+      this.setBorders(
+        this.rectangle,
+        this.helper.adjustShade(STUN_GUN_COLOR, BORDER_SHADE_INTENSITY)
+      );
     } else {
-      this.setBorders(this.rectangle,this.helper.adjustShade(TILE_COLOR, -50))
+      this.setBorders(this.rectangle, this.helper.adjustShade(TILE_COLOR, -50));
+      this.rectangle.name = this.tileproperties.type
       this.scene.add.existing(this.rectangle);
     }
   }
