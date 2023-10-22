@@ -31,7 +31,7 @@ export default class Tile {
   }
 
   setBorders(rect, color) {
-    rect.setStrokeStyle(1, color);
+    rect.setStrokeStyle(1, this.helper.adjustShade(color, -50));
   }
 
   createTile() {
@@ -39,7 +39,6 @@ export default class Tile {
     let entryGradient = new Phaser.GameObjects.Graphics(this.scene);
     if (this.tileproperties.type === "path") {
       this.rectangle.setFillStyle(PATH_COLOR);
-      
     } else if (this.tileproperties.type === "start_path_top") {
       this.rectangle.fillColor = PATH_COLOR;
       entryGradient.fillGradientStyle(...START_PATH_TOP_GRADIENT_COLORS, 1);
@@ -83,7 +82,7 @@ export default class Tile {
       );
     } else {
       this.setBorders(this.rectangle, this.helper.adjustShade(TILE_COLOR, -50));
-      this.rectangle.name = this.tileproperties.type
+      this.rectangle.name = this.tileproperties.type;
       this.scene.add.existing(this.rectangle);
     }
   }

@@ -2,7 +2,7 @@ import Tile from "./Tile";
 import Weapon from "./Weapon";
 import { weaponarray } from "../state/WeaponArray";
 import { gameStore } from "../state/GameStore";
-import Pretty from "./Pretty"
+import Pretty from "./Pretty";
 
 export default class Map {
   MappingData = [];
@@ -92,7 +92,6 @@ export default class Map {
 
     // Pretty the map
     this.pretty.makeTilesPretty();
-
   };
 
   setMappingData = (value) => {
