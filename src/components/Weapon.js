@@ -1,10 +1,10 @@
 import Tile from "./Tile";
 import { weaponarray } from "../state/WeaponArray";
-import fireLaser from "./WeaponFiringAction/FireLaser"
-import fireHomingMissile from "./WeaponFiringAction/FireHomingMissile"
+import fireLaser from "./WeaponFiringAction/FireLaser";
+import fireHomingMissile from "./WeaponFiringAction/FireHomingMissile";
+import fireStunGun from "./WeaponFiringAction/FireStunGun";
 
 const ZONE_RADIUS = 60;
-
 
 function Weapon(scene, weaponproperties) {
   Tile.call(this, scene, weaponproperties);
@@ -42,7 +42,7 @@ function checkEnemyInZone(weaponShape, enemyObjects, t) {
   });
 
   // Choose an enemy based on the specified strategy
-  const strategy = "nearest"
+  const strategy = "nearest";
   const selectedEnemy = chooseEnemy(enemyObjects, distances, strategy);
 
   if (selectedEnemy && selectedEnemy.active) {
@@ -61,9 +61,7 @@ function chooseEnemy(enemyObjects, distances, strategy) {
   } else if (strategy === "lowestHealth") {
     selectedEnemy = enemyObjects
       .filter((enemy) => {
-        const distance = distances.find(
-          ({ enemy: e }) => e === enemy
-        ).distance;
+        const distance = distances.find(({ enemy: e }) => e === enemy).distance;
         return enemy.active && enemy.health >= 0 && distance < ZONE_RADIUS;
       })
       .sort((a, b) => a.health - b.health)
@@ -73,17 +71,16 @@ function chooseEnemy(enemyObjects, distances, strategy) {
   return selectedEnemy;
 }
 
-
 function fireWeapon(weaponShape, enemyShape, t) {
+  weaponShape.setData("damage", t.tileproperties.damage);
   if (t.tileproperties.type === "basic_gun") {
-    fireLaser(weaponShape, enemyShape, t.scene)
+    fireLaser(weaponShape, enemyShape, t.scene);
   } else if (t.tileproperties.type === "homing_missile") {
     fireHomingMissile(weaponShape, enemyShape, t.scene);
+  } else if (t.tileproperties.type === "stun_gun") {
+    fireStunGun(weaponShape, enemyShape, t.scene);
   }
 }
-
-
-
 
 function createWeaponGraphics(t) {
   if (t.tileproperties.type === "basic_gun") {
@@ -102,6 +99,15 @@ function createWeaponGraphics(t) {
       t.tileproperties.y,
       10,
       10,
+      0x000000
+    );
+  } else if (t.tileproperties.type === "stun_gun") {
+    return t.scene.add.star(
+      t.tileproperties.x,
+      t.tileproperties.y,
+      8,
+      4,
+      9,
       0x000000
     );
   }
@@ -132,7 +138,6 @@ Weapon.prototype.createTile = function () {
   const weaponHull = this.scene.add.existing(this.rectangle);
   const weaponPrimary = createWeaponGraphics(this);
 
-
   this.scene.time.addEvent({
     delay: 100,
     loop: true,
@@ -140,8 +145,7 @@ Weapon.prototype.createTile = function () {
       const objects = this.scene.children.getAll();
       const enemyObjects = objects.filter((obj) => obj.name === "enemy");
 
-       checkEnemyInZone(weaponHull,enemyObjects,this)
-
+      checkEnemyInZone(weaponHull, enemyObjects, this);
     }.bind(this),
   });
 

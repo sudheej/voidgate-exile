@@ -2,6 +2,7 @@ import Tile from "./Tile";
 import Weapon from "./Weapon";
 import { weaponarray } from "../state/WeaponArray";
 import { gameStore } from "../state/GameStore";
+import Pretty from "./Pretty";
 
 export default class Map {
   MappingData = [];
@@ -9,13 +10,14 @@ export default class Map {
 
   constructor(scene) {
     this.scene = scene;
+    this.pretty = new Pretty(this.scene);
   }
 
   createMap = (mapOriginX, mapOriginY) => {
     this.scene.input.setDefaultCursor("grab");
     let mapHorizontalLength = this.MappingData.length;
     let mapVerticalLength = this.MappingData[0].length;
-    let defaultColor = 0x343434;
+    let defaultColor = 0x4dd4ca;
 
     for (let vi = 0; vi < mapVerticalLength; vi++) {
       for (let hi = 0; hi < mapHorizontalLength; hi++) {
@@ -87,6 +89,9 @@ export default class Map {
         }
       }
     }
+
+    // Pretty the map
+    this.pretty.makeTilesPretty();
   };
 
   setMappingData = (value) => {

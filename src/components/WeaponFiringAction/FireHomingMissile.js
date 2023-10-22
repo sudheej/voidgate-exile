@@ -84,7 +84,7 @@ export default function fireHomingMissile(weapon, enemy, scene) {
       rocket.destroy();
       handleMissileExplosion(rocket, enemy, weapon, timer);
       if (enemy.health > 0) {
-        enemy.decreaseHealth(10);
+        enemy.decreaseHealth(weapon.getData("damage"));
         enemy.setData("lockedBy", null);
       } else if (enemy !== null) {
         enemy.destroyEnemy();
