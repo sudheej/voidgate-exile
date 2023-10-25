@@ -35,6 +35,8 @@ class Main extends Phaser.Scene {
     super();
     this.audio = new Audio(this);
     this.wave = new Wave(this);
+    this.map = new Map(this);
+    this.inventory = new Inventory(this);
   }
 
   preload() {
@@ -57,12 +59,10 @@ class Main extends Phaser.Scene {
 
     const scoreBoard = new ScoreBoard(this);
 
-    const map = new Map(this);
-    map.MappingData = plainmap;
-    map.createMap(MAP_WIDTH, MAP_HEIGHT);
+    this.map.MappingData = plainmap;
+    this.map.createMap(MAP_WIDTH, MAP_HEIGHT);
 
-    const inventory = new Inventory(this);
-    inventory.createInventory();
+    this.inventory.createInventory();
 
     const path = new Path(this);
     path.PathData = plainmap_path;
@@ -78,6 +78,7 @@ class Main extends Phaser.Scene {
     const memory = Math.round(
       window.performance.memory.usedJSHeapSize / 1024 / 1024
     );
+    this.inventory.update();
     this.wave.updateEnemyStatus();
     if (this.wave.wavestart && this.wave.currentEnemies.length === 0) {
       gameStore.wave += 1;

@@ -13,6 +13,8 @@ export default class Map {
     this.pretty = new Pretty(this.scene);
   }
 
+
+
   createMap = (mapOriginX, mapOriginY) => {
     this.scene.input.setDefaultCursor("grab");
     let mapHorizontalLength = this.MappingData.length;
@@ -76,9 +78,7 @@ export default class Map {
 
         function handleInvalidPlacement(scene, weaponCost) {
           scene.input.setDefaultCursor("not-allowed");
-          if (gameStore.money <= weaponCost) {
-            weaponarray.selectedproperty.rectangle.alpha = 0.5;
-          }
+    
         }
 
         function isEligible(tile) {

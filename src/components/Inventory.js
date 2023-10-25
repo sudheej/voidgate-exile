@@ -2,12 +2,35 @@ import Weapon from "./Weapon";
 import { weaponarray } from "../state/WeaponArray";
 import GameText from "../utilities/GameText";
 import Helper from "../utilities/Helper";
-
+import { gameStore } from "../state/GameStore";
 export default class Inventory {
   constructor(scene) {
     this.scene = scene;
     this.helper = new Helper();
     this.gameText = new GameText();
+  }
+
+  update = () => {
+    let weaponArrayItems = [];
+    if (this.scene.sys.displayList instanceof Phaser.GameObjects.DisplayList) {
+      weaponArrayItems = this.scene.sys.displayList.list.filter(
+        (child) => child instanceof Phaser.GameObjects.Rectangle
+      );
+    }
+
+    weaponArrayItems.forEach((weponArrayItem) => {
+      if (weponArrayItem.name === "weapontimele") {
+        if (gameStore.money <= parseInt(weponArrayItem.getData("cost"))) {
+          weponArrayItem.alpha = 0.5
+        }
+        else {
+          weponArrayItem.alpha = 1
+        }
+
+
+      }
+    });
+
   }
 
   createInventory() {
@@ -59,6 +82,7 @@ export default class Inventory {
       weapon.createTile();
 
       weapon.rectangle.setInteractive();
+      weapon.rectangle.setData("cost",x.cost)
       weapon.rectangle.on("pointerdown", () => {
         weaponarray.selectedproperty = weapon;
         this.scene.audio.play("_aud_weapon_pickup");
