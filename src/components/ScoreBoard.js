@@ -7,10 +7,10 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
   constructor(scene, x, y, lives, money) {
     super(scene, x, y);
 
-    // Add the Orbitron font to the project
+    // Add the Electrolize font to the project
     WebFont.load({
       google: {
-        families: ["Orbitron"],
+        families: ["Electrolize"],
       },
       active: function () {
         // Font is loaded and ready to use
@@ -18,18 +18,23 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
     });
 
     // Create text objects to display lives and money
-    this.moneyText = scene.add.text(0, 30, `Money: $${gameStore.money}`, {
-      fontSize: "20px",
+    this.moneyText = scene.add.text(0, 30, `MONEY: $${gameStore.money}`, {
+      fontSize: "15px",
       fill: "#4DD4CA",
-      fontFamily: "Orbitron",
+      fontFamily: "Electrolize",
     });
 
-    this.waveText = scene.add.text(10, 30, `Wave: ${gameStore.wave}`, {
-      fontSize: "20px",
+    this.waveText = scene.add.text(10, 30, `WAVE: ${gameStore.wave}`, {
+      fontSize: "15px",
       fill: "#4DD4CA",
-      fontFamily: "Orbitron",
+      fontFamily: "Electrolize",
     });
-
+    
+    this.enemyText = scene.add.text(80, 30, `Enemies: ${gameStore.enemies}`, {
+      fontSize: "15px",
+      fill: "#4DD4CA",
+      fontFamily: "Electrolize",
+    });
     // Add the text objects to the container
     this.add(this.moneyText);
 
@@ -41,6 +46,7 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
     this.disposer = autorun(() => {
       this.moneyText.setText(`Money: $${gameStore.money}`);
       this.waveText.setText(`Wave: ${gameStore.wave}`);
+      this.enemyText.setText(`Enemies: ${gameStore.enemies}`);
     });
   }
 

@@ -37,7 +37,6 @@ class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-
     this.load.script(
       "webfont",
       "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
@@ -46,7 +45,7 @@ class PreloadScene extends Phaser.Scene {
     // Load your assets here
     WebFont.load({
       google: {
-        families: ["Orbitron"],
+        families: ["Electrolize"],
       },
       active: function () {
         // Font is loaded and ready to use
@@ -59,7 +58,7 @@ class PreloadScene extends Phaser.Scene {
 
 class Main extends Phaser.Scene {
   constructor() {
-    super('Main');
+    super("Main");
     this.audio = new Audio(this);
     this.wave = new Wave(this);
   }
@@ -72,9 +71,24 @@ class Main extends Phaser.Scene {
 
   create() {
     this.text = this.add.text(10, 760, "", {
-      font: "10px Orbitron",
+      font: "15px Electrolize",
       fill: "#4DD4CA",
     });
+
+    this.title = this.add.text(10,4,"Void Gate Exile", {
+      font: "25px Electrolize",
+      fill: "#4DD4CA",
+    })
+
+    const fx1 = this.title.postFX.addGlow(0x4DD4CA, 0, 0, false, 0.1, 24);
+
+    this.tweens.add({
+      targets: fx1,
+      outerStrength: 1,
+      yoyo: true,
+      loop: -1,
+      ease: 'sine.inout'
+  });
 
     this.audio.create(AUDIOS);
 
@@ -107,9 +121,10 @@ class Main extends Phaser.Scene {
       this.wave.wavestart = false;
       this.wave.createWave(this.enemyPath);
     }
+    gameStore.enemies = this.wave.currentEnemies.length
     this.text.setText(
-      `FPS: ${fps} Memory: ${memory} MB Enemies: ${this.wave.currentEnemies.length}`
-    )
+      `FPS: ${fps} Memory: ${memory} MB`
+    );
   }
 }
 
@@ -121,7 +136,7 @@ const config = {
   height: 800,
   mode: Phaser.Scale.FIT,
   autoCenter: Phaser.Scale.CENTER_BOTH,
-  scene: [PreloadScene,Main],
+  scene: [PreloadScene, Main],
   plugins: {
     global: [
       {
