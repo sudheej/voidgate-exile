@@ -1,7 +1,7 @@
 import { gameStore } from "../state/GameStore";
 import { autorun } from "mobx";
 import { observer } from "mobx-react";
-import WebFont from 'webfontloader';
+import WebFont from "webfontloader";
 
 export class ScoreBoard extends Phaser.GameObjects.Container {
   constructor(scene, x, y, lives, money) {
@@ -10,24 +10,24 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
     // Add the Orbitron font to the project
     WebFont.load({
       google: {
-        families: ['Orbitron']
+        families: ["Orbitron"],
       },
-      active: function() {
+      active: function () {
         // Font is loaded and ready to use
-      }
+      },
     });
 
     // Create text objects to display lives and money
     this.moneyText = scene.add.text(0, 30, `Money: $${gameStore.money}`, {
       fontSize: "20px",
       fill: "#4DD4CA",
-      fontFamily: "Orbitron"
+      fontFamily: "Orbitron",
     });
 
     this.waveText = scene.add.text(10, 30, `Wave: ${gameStore.wave}`, {
       fontSize: "20px",
       fill: "#4DD4CA",
-      fontFamily: "Orbitron"
+      fontFamily: "Orbitron",
     });
 
     // Add the text objects to the container
