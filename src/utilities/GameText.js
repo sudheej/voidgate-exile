@@ -4,11 +4,11 @@ export default class GameText {
 
     WebFont.load({
       google: {
-        families: ["Orbitron"],
+        families: ["Electrolize"],
       },
       active: function () {
         const weapontInventoryTitle = add.text(x, y, text, {
-          fontFamily: "Orbitron",
+          fontFamily: "Electrolize",
           fontSize: fontSize,
           color: color,
         });
