@@ -75,20 +75,20 @@ class Main extends Phaser.Scene {
       fill: "#4DD4CA",
     });
 
-    this.title = this.add.text(10,4,"Void Gate Exile", {
+    this.title = this.add.text(10, 4, "Void Gate Exile", {
       font: "25px Electrolize",
       fill: "#4DD4CA",
-    })
+    });
 
-    const fx1 = this.title.postFX.addGlow(0x4DD4CA, 0, 0, false, 0.1, 24);
+    const fx1 = this.title.postFX.addGlow(0x4dd4ca, 0, 0, false, 0.1, 24);
 
     this.tweens.add({
       targets: fx1,
       outerStrength: 1,
       yoyo: true,
       loop: -1,
-      ease: 'sine.inout'
-  });
+      ease: "sine.inout",
+    });
 
     this.audio.create(AUDIOS);
 
@@ -121,10 +121,8 @@ class Main extends Phaser.Scene {
       this.wave.wavestart = false;
       this.wave.createWave(this.enemyPath);
     }
-    gameStore.enemies = this.wave.currentEnemies.length
-    this.text.setText(
-      `FPS: ${fps} Memory: ${memory} MB`
-    );
+    gameStore.enemies = this.wave.currentEnemies.length;
+    this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
   }
 }
 

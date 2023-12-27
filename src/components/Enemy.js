@@ -104,12 +104,6 @@ export default class Enemy {
       requestAnimationFrame(animate);
     };
 
-    /*    enemyShape.stun = (duration) => {
-      enemyShape.setData("stunned",true) 
-      setTimeout(() => {
-        enemyShape.setData("stunned",false) ;
-      }, duration);
-    } */
 
     enemyShape.destroyEnemy = () => {
       //const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
@@ -141,6 +135,13 @@ export default class Enemy {
 
   increaseMoney() {
     gameStore.money += 20;
+  }
+
+  decreaseHealth(difficulty) {
+    const computedLoss = gameStore.wave * (difficulty)
+    if (gameStore.life_bar > 10) {
+      gameStore.life_bar -= computedLoss;
+    }
   }
 
   createEnemyWithPath(pathCoordinates, enemyObject) {
@@ -177,6 +178,7 @@ export default class Enemy {
       yoyo: false,
     });
 
+    
     this.scene.time.addEvent({
       delay: 4 * enemyObject.speed,
       loop: true,
@@ -185,11 +187,17 @@ export default class Enemy {
           this.tweenProgress += 0.003;
           if (this.tweenProgress > 1) {
             this.tweenProgress -= 1;
+            
+           // console.log("igot fired")
+            //this.decreaseHealth(enemyObject.difficulty);
           }
           const position = this.path.getPoint(this.tweenProgress);
 
           this.enemyAvatar.setPosition(position.x, position.y);
           this.enemyAvatar.healthBar.setPosition(position.x, position.y - 10);
+
+          //console.log(position)
+          
         }
 
         // if (this.health > 0) {
