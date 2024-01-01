@@ -12,6 +12,7 @@ import enemy_list from "./assets/entities/enemys.json";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
 import explosion from "./assets/audio/explosion.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
+import hurt from "./assets/audio/hurt.ogg";
 import Audio from "./utilities/Audio";
 import blue from "./assets/effects/blue.png";
 import flarePng from "./assets/effects/flares.png";
@@ -26,6 +27,7 @@ const AUDIOS = [
   { name: "_aud_weapon_pickup", src: weaponPickup },
   { name: "_aud_explosion", src: explosion },
   { name: "_aud_weapon_place", src: weaponPlace },
+  { name: "_aud_hurt", src: hurt },
 ];
 
 const MAP_WIDTH = 300;

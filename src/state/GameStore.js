@@ -1,9 +1,9 @@
 import { makeAutoObservable, observable } from "mobx";
-import {configure } from "mobx"
+import { configure } from "mobx";
 
 configure({
-  enforceActions: "never"
-})
+  enforceActions: "never",
+});
 
 class GameStore {
   @observable money = 5200;
