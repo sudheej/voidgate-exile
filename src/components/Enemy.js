@@ -137,9 +137,10 @@ export default class Enemy {
   }
 
   decreaseHealth(difficulty) {
-    const computedLoss = gameStore.wave * difficulty;
-    if (gameStore.life_bar > 10) {
-      gameStore.life_bar -= computedLoss;
+    //const computedLoss = gameStore.wave * difficulty;
+    if (gameStore.life_bar > 1) {
+      gameStore.life_bar -= 1;
+      this.scene.audio.play("_aud_hurt");
     }
   }
 
@@ -188,7 +189,6 @@ export default class Enemy {
 
             //console.log("igot fired")
             this.decreaseHealth(enemyObject.difficulty);
-            this.scene.audio.play("_aud_hurt");
           }
           const position = this.path.getPoint(this.tweenProgress);
 

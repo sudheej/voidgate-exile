@@ -36,12 +36,24 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
       fontFamily: "Electrolize",
     });
 
-    this.healthBar = scene.add
-      .rectangle(-82, 45, 80, 15, 0x4dd4ca)
+        
+    this.healthBarOutline = scene.add
+      .rectangle(-90, 45, 78, 13)
       .setOrigin(0, 1);
 
+      this.healthBarOutline.setStrokeStyle(1,0x4dd4ca)
+
+    this.healthBar = scene.add
+      .rectangle(-89, 45, 80, 15, 0x4dd4ca)
+      .setOrigin(0, 1);
+
+      
+
     // Add the text objects to the container
+    this.add(this.healthBarOutline)
+
     this.add(this.healthBar);
+
     this.add(this.moneyText);
 
     // Add the container to the scene
