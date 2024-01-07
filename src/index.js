@@ -10,8 +10,10 @@ import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
 import enemy_list from "./assets/entities/enemys.json";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
+import textAppear from "./assets/audio/text_appear.ogg";
 import explosion from "./assets/audio/explosion.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
+import hurt from "./assets/audio/hurt.ogg";
 import Audio from "./utilities/Audio";
 import blue from "./assets/effects/blue.png";
 import flarePng from "./assets/effects/flares.png";
@@ -26,6 +28,8 @@ const AUDIOS = [
   { name: "_aud_weapon_pickup", src: weaponPickup },
   { name: "_aud_explosion", src: explosion },
   { name: "_aud_weapon_place", src: weaponPlace },
+  { name: "_aud_hurt", src: hurt },
+  { name: "_aud_text_appear", src: textAppear },
 ];
 
 const MAP_WIDTH = 300;
@@ -75,24 +79,27 @@ class Main extends Phaser.Scene {
       fill: "#4DD4CA",
     });
 
-    this.title = this.add.text(10,4,"Void Gate Exile", {
+    this.title = this.add.text(10, 4, "Void Gate Exile", {
       font: "25px Electrolize",
       fill: "#4DD4CA",
-    })
+    });
 
-    const fx1 = this.title.postFX.addGlow(0x4DD4CA, 0, 0, false, 0.1, 24);
+    const fx1 = this.title.postFX.addGlow(0x4dd4ca, 0, 0, false, 0.1, 24);
 
     this.tweens.add({
       targets: fx1,
       outerStrength: 1,
       yoyo: true,
       loop: -1,
-      ease: 'sine.inout'
-  });
+      ease: "sine.inout",
+    });
 
     this.audio.create(AUDIOS);
 
     const scoreBoard = new ScoreBoard(this);
+
+    this.scene.bringToTop();
+    //modalDialog.createDialog();
 
     const map = new Map(this);
     map.MappingData = plainmap;
@@ -121,10 +128,8 @@ class Main extends Phaser.Scene {
       this.wave.wavestart = false;
       this.wave.createWave(this.enemyPath);
     }
-    gameStore.enemies = this.wave.currentEnemies.length
-    this.text.setText(
-      `FPS: ${fps} Memory: ${memory} MB`
-    );
+    gameStore.enemies = this.wave.currentEnemies.length;
+    this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
   }
 }
 

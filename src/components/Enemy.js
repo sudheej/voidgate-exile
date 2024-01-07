@@ -1,6 +1,7 @@
 import Helper from "../utilities/Helper";
 import { Game } from "phaser";
 import { gameStore } from "../state/GameStore";
+import ModalDialog from "./Ui/ModalDialog";
 export default class Enemy {
   constructor(scene) {
     this.scene = scene;
@@ -104,13 +105,6 @@ export default class Enemy {
       requestAnimationFrame(animate);
     };
 
-    /*    enemyShape.stun = (duration) => {
-      enemyShape.setData("stunned",true) 
-      setTimeout(() => {
-        enemyShape.setData("stunned",false) ;
-      }, duration);
-    } */
-
     enemyShape.destroyEnemy = () => {
       //const emitZone = new Phaser.Geom.Polygon(enemyShape.geom.getPoints());
       if (enemyShape !== null) {
@@ -141,6 +135,18 @@ export default class Enemy {
 
   increaseMoney() {
     gameStore.money += 20;
+  }
+
+  decreaseHealth(difficulty) {
+    //const computedLoss = gameStore.wave * difficulty;
+    if (gameStore.life_bar > 1) {
+      gameStore.life_bar -= 5;
+      //this.scene.audio.play("_aud_hurt");
+    } else {
+      const modalDialog = new ModalDialog(this.scene);
+      modalDialog.createDialog("GAMEOVER:");
+      //this.scene.destroy();
+    }
   }
 
   createEnemyWithPath(pathCoordinates, enemyObject) {
@@ -185,17 +191,20 @@ export default class Enemy {
           this.tweenProgress += 0.003;
           if (this.tweenProgress > 1) {
             this.tweenProgress -= 1;
+
+            //console.log("igot fired")
+            this.decreaseHealth(enemyObject.difficulty);
           }
           const position = this.path.getPoint(this.tweenProgress);
 
           this.enemyAvatar.setPosition(position.x, position.y);
           this.enemyAvatar.healthBar.setPosition(position.x, position.y - 10);
-        }
 
-        // if (this.health > 0) {
-        //     this.health = this.health - 1
-        //     this.enemyAvatar.healthBar.setScale(this.health/100, 1);
-        // }
+          //console.log(position)
+        }
+        if (this.health <= 0) {
+          this.tweenProgress = 0;
+        }
       },
     });
   }
