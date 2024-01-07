@@ -10,6 +10,7 @@ import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
 import enemy_list from "./assets/entities/enemys.json";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
+import textAppear from "./assets/audio/text_appear.ogg"
 import explosion from "./assets/audio/explosion.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
 import hurt from "./assets/audio/hurt.ogg";
@@ -28,6 +29,7 @@ const AUDIOS = [
   { name: "_aud_explosion", src: explosion },
   { name: "_aud_weapon_place", src: weaponPlace },
   { name: "_aud_hurt", src: hurt },
+  { name: "_aud_text_appear", src: textAppear },
 ];
 
 const MAP_WIDTH = 300;
@@ -95,6 +97,10 @@ class Main extends Phaser.Scene {
     this.audio.create(AUDIOS);
 
     const scoreBoard = new ScoreBoard(this);
+
+    
+    this.scene.bringToTop()
+    //modalDialog.createDialog();
 
     const map = new Map(this);
     map.MappingData = plainmap;

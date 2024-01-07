@@ -51,7 +51,7 @@ export default class Inventory {
       0.2
     );
     weaponInventoryOuterBoundary.fillRect(776, 180, 150, 200);
-    this.gameText.writeText(this.scene, 810, 150, "Tower", 20, "#4DD4CA");
+    this.gameText.writeText(this.scene, 825, 150, "Tower", 20, "#4DD4CA");
     weaponProperties.map((x) => {
       const weapon = new Weapon(this.scene, x);
 

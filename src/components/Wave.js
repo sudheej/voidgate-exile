@@ -1,6 +1,7 @@
 import enemy_list from "../assets/entities/enemys.json";
 import Enemy from "./Enemy";
 import { gameStore } from "../state/GameStore";
+import ModalDialog from "./Ui/ModalDialog";
 
 export default class Wave {
   constructor(scene) {
@@ -19,10 +20,10 @@ export default class Wave {
       this.wavestart = false;
       this.createEnemies(enemy_list[randomIndex], TotalCount, enemyPath);
     } else {
-      console.log(
-        "All waves completed, you have won the game , Total Enemies Killed " +
-          TotalCount
-      );
+      const message = "All waves completed, Killed " + TotalCount
+      const modalDialog = new ModalDialog(this.scene)
+      modalDialog.createDialog(message)
+
     }
   }
 

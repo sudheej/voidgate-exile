@@ -1,6 +1,7 @@
 import Helper from "../utilities/Helper";
 import { Game } from "phaser";
 import { gameStore } from "../state/GameStore";
+import ModalDialog from "./Ui/ModalDialog"
 export default class Enemy {
   constructor(scene) {
     this.scene = scene;
@@ -139,8 +140,15 @@ export default class Enemy {
   decreaseHealth(difficulty) {
     //const computedLoss = gameStore.wave * difficulty;
     if (gameStore.life_bar > 1) {
-      gameStore.life_bar -= 1;
-      this.scene.audio.play("_aud_hurt");
+      gameStore.life_bar -= 5;
+      //this.scene.audio.play("_aud_hurt");
+    }
+    else {
+
+      const modalDialog = new ModalDialog(this.scene);
+      modalDialog.createDialog("GAMEOVER:")
+      //this.scene.destroy();
+
     }
   }
 

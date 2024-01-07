@@ -24,6 +24,12 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
       fontFamily: "Electrolize",
     });
 
+    this.lifeLabel = scene.add.text(-125, 30, `Life: `, {
+      fontSize: "15px",
+      fill: "#4DD4CA",
+      fontFamily: "Electrolize",
+    });
+
     this.waveText = scene.add.text(10, 30, `WAVE: ${gameStore.wave}`, {
       fontSize: "15px",
       fill: "#4DD4CA",
@@ -36,25 +42,24 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
       fontFamily: "Electrolize",
     });
 
-        
     this.healthBarOutline = scene.add
       .rectangle(-90, 45, 78, 13)
       .setOrigin(0, 1);
 
-      this.healthBarOutline.setStrokeStyle(1,0x4dd4ca)
+    this.healthBarOutline.setStrokeStyle(1, 0x4dd4ca);
 
     this.healthBar = scene.add
       .rectangle(-89, 45, 80, 15, 0x4dd4ca)
       .setOrigin(0, 1);
 
-      
-
     // Add the text objects to the container
-    this.add(this.healthBarOutline)
+    this.add(this.healthBarOutline);
 
     this.add(this.healthBar);
 
     this.add(this.moneyText);
+
+    this.add(this.lifeLabel);
 
     // Add the container to the scene
     //this.setSize(200, 50);
