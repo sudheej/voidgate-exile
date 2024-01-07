@@ -10,7 +10,7 @@ import { weaponarray } from "./state/WeaponArray";
 import Inventory from "./components/Inventory";
 import enemy_list from "./assets/entities/enemys.json";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
-import textAppear from "./assets/audio/text_appear.ogg"
+import textAppear from "./assets/audio/text_appear.ogg";
 import explosion from "./assets/audio/explosion.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
 import hurt from "./assets/audio/hurt.ogg";
@@ -98,8 +98,7 @@ class Main extends Phaser.Scene {
 
     const scoreBoard = new ScoreBoard(this);
 
-    
-    this.scene.bringToTop()
+    this.scene.bringToTop();
     //modalDialog.createDialog();
 
     const map = new Map(this);

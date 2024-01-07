@@ -8,7 +8,7 @@ export default class ModalDialog {
   createDialog = (message) => {
     const textSource = message;
     const letterCount = textSource.length;
-    const text = this.scene.add.text(85, 590, '', {
+    const text = this.scene.add.text(85, 590, "", {
       fontSize: "55px",
       fill: "#FF0000",
       fontFamily: "Electrolize",

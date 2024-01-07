@@ -20,10 +20,9 @@ export default class Wave {
       this.wavestart = false;
       this.createEnemies(enemy_list[randomIndex], TotalCount, enemyPath);
     } else {
-      const message = "All waves completed, Killed " + TotalCount
-      const modalDialog = new ModalDialog(this.scene)
-      modalDialog.createDialog(message)
-
+      const message = "All waves completed, Killed " + TotalCount;
+      const modalDialog = new ModalDialog(this.scene);
+      modalDialog.createDialog(message);
     }
   }
 
