@@ -1,7 +1,7 @@
 import Helper from "../utilities/Helper";
 import { Game } from "phaser";
 import { gameStore } from "../state/GameStore";
-import ModalDialog from "./Ui/ModalDialog";
+import ModalDialog from "./UI/ModalDialog";
 export default class Enemy {
   constructor(scene) {
     this.scene = scene;

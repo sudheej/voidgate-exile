@@ -1,7 +1,7 @@
 import enemy_list from "../assets/entities/enemys.json";
 import Enemy from "./Enemy";
 import { gameStore } from "../state/GameStore";
-import ModalDialog from "./Ui/ModalDialog";
+import ModalDialog from "./UI/ModalDialog";
 
 export default class Wave {
   constructor(scene) {
