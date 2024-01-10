@@ -138,9 +138,9 @@ export default class Enemy {
   }
 
   decreaseHealth(difficulty) {
-    //const computedLoss = gameStore.wave * difficulty;
+    const computedLoss = gameStore.wave * difficulty;
     if (gameStore.life_bar > 1) {
-      gameStore.life_bar -= 5;
+      gameStore.life_bar -= computedLoss;
       //this.scene.audio.play("_aud_hurt");
     } else {
       const modalDialog = new ModalDialog(this.scene);
@@ -192,7 +192,6 @@ export default class Enemy {
           if (this.tweenProgress > 1) {
             this.tweenProgress -= 1;
 
-            //console.log("igot fired")
             this.decreaseHealth(enemyObject.difficulty);
           }
           const position = this.path.getPoint(this.tweenProgress);
@@ -200,7 +199,6 @@ export default class Enemy {
           this.enemyAvatar.setPosition(position.x, position.y);
           this.enemyAvatar.healthBar.setPosition(position.x, position.y - 10);
 
-          //console.log(position)
         }
         if (this.health <= 0) {
           this.tweenProgress = 0;

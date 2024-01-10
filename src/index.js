@@ -116,12 +116,17 @@ class Main extends Phaser.Scene {
     //this.wave = new Wave(this);
     this.wave.createWave(this.enemyPath);
   }
-
-  update(time, delta) {
+  debugGame(delta) {
     const fps = Math.round(1000 / delta);
-    const memory = Math.round(
-      window.performance.memory.usedJSHeapSize / 1024 / 1024
-    );
+    let memory = null;
+    if (typeof window.performance.memory !== 'undefined') {
+      memory = Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024);
+    }
+    this.text.setText(`FPS: ${fps} Memory: ${memory === null ? 'N/A' : memory + ' MB'}`);
+
+  }
+  update(time, delta) {
+
     this.wave.updateEnemyStatus();
     if (this.wave.wavestart && this.wave.currentEnemies.length === 0) {
       gameStore.wave += 1;
@@ -129,16 +134,18 @@ class Main extends Phaser.Scene {
       this.wave.createWave(this.enemyPath);
     }
     gameStore.enemies = this.wave.currentEnemies.length;
-    this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
+    //this.debugGame(delta)
+
   }
+  
 }
 
 const config = {
-  type: Phaser.WEBGL,
+  type: Phaser.AUTO,
   backgroundColor: "#000000",
   parent: "game",
   width: 1000,
-  height: 800,
+  height: 700,
   mode: Phaser.Scale.FIT,
   autoCenter: Phaser.Scale.CENTER_BOTH,
   scene: [PreloadScene, Main],
