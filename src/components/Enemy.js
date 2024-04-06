@@ -138,14 +138,32 @@ export default class Enemy {
   }
 
   decreaseHealth(difficulty) {
-    //const computedLoss = gameStore.wave * difficulty;
-    if (gameStore.life_bar > 1) {
-      gameStore.life_bar -= 5;
-      //this.scene.audio.play("_aud_hurt");
-    } else {
-      const modalDialog = new ModalDialog(this.scene);
-      modalDialog.createDialog("GAMEOVER:");
-      //this.scene.destroy();
+    if (!gameStore.gameover) {
+      // Check if transition has already occurred
+      if (gameStore.life_bar > 1) {
+        gameStore.life_bar -= 5;
+        //this.scene.audio.play("_aud_hurt");
+      } else {
+        const modalDialog = new ModalDialog(this.scene);
+
+        modalDialog.createDialog("GAMEOVER").then((completed) => {
+          if (completed) {
+            console.log("Tween animation completed.");
+            this.scene.cameras.main.fadeOut(1200, 0, 0, 0);
+
+            this.scene.cameras.main.once(
+              Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+              () => {
+                console.log(this.scene);
+                this.scene.scene.start("gameOverScene");
+              }
+            );
+            // Do something else after the animation is completed
+          }
+        });
+
+        gameStore.gameover = true; // Set the flag to indicate transition executed
+      }
     }
   }
 

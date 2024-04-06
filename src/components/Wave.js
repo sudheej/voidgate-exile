@@ -22,8 +22,27 @@ export default class Wave {
     } else {
       const message = "All waves completed, Killed " + TotalCount;
       const modalDialog = new ModalDialog(this.scene);
-      modalDialog.createDialog(message);
+      modalDialog.createDialog(message).then((completed) => {
+        if (completed) {
+          this.scene.cameras.main.fadeOut(1200, 0, 0, 0);
+
+          this.scene.cameras.main.once(
+            Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+            () => {
+              console.log(this.scene);
+              this.scene.scene.start("gameOverScene");
+            }
+          );
+          // Do something else after the animation is completed
+        }
+      });
     }
+  }
+
+  resetWave() {
+    this.wave = 1;
+    this.currentEnemies = [];
+    this.wavestart = false;
   }
 
   createEnemies(enemyDetails, count, enemyPath) {
