@@ -57,6 +57,7 @@ class PreloadScene extends Phaser.Scene {
         this.scene.start("Main");
       }.bind(this),
     });
+    gameStore.resetData();
   }
 }
 
@@ -118,18 +119,51 @@ class Main extends Phaser.Scene {
   }
 
   update(time, delta) {
-    const fps = Math.round(1000 / delta);
-    const memory = Math.round(
-      window.performance.memory.usedJSHeapSize / 1024 / 1024
-    );
-    this.wave.updateEnemyStatus();
-    if (this.wave.wavestart && this.wave.currentEnemies.length === 0) {
-      gameStore.wave += 1;
-      this.wave.wavestart = false;
-      this.wave.createWave(this.enemyPath);
+    if (!gameStore.gameover) {
+      const fps = Math.round(1000 / delta);
+      const memory = Math.round(
+        window.performance.memory.usedJSHeapSize / 1024 / 1024
+      );
+      this.wave.updateEnemyStatus();
+      if (this.wave.wavestart && this.wave.currentEnemies.length === 0) {
+        gameStore.wave += 1;
+        this.wave.wavestart = false;
+        this.wave.createWave(this.enemyPath);
+      }
+      gameStore.enemies = this.wave.currentEnemies.length;
+      this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
+    } else {
+      this.wave.resetWave();
     }
-    gameStore.enemies = this.wave.currentEnemies.length;
-    this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
+  }
+}
+
+class GameOverScene extends Phaser.Scene {
+  constructor() {
+    super("gameOverScene");
+  }
+
+  create() {
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
+
+    const { width, height } = this.game.canvas;
+
+    // Add a restart button
+    const restartButton = this.add
+      .text(width / 2, height / 2, "Restart", {
+        fontSize: "40px",
+        fontFamily: "Electrolize",
+        fill: "#4DD4CA",
+      })
+      .setOrigin(0.5);
+
+    // Make the button interactive
+    restartButton.setInteractive();
+
+    // Handle button click
+    restartButton.on("pointerdown", () => {
+      this.scene.start("PreloadScene"); // Restart the MainScene
+    });
   }
 }
 
@@ -141,7 +175,7 @@ const config = {
   height: 800,
   mode: Phaser.Scale.FIT,
   autoCenter: Phaser.Scale.CENTER_BOTH,
-  scene: [PreloadScene, Main],
+  scene: [PreloadScene, Main, GameOverScene],
   plugins: {
     global: [
       {

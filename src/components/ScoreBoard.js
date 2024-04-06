@@ -36,7 +36,7 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
       fontFamily: "Electrolize",
     });
 
-    this.enemyText = scene.add.text(80, 30, `Enemies: ${gameStore.enemies}`, {
+    this.enemyText = scene.add.text(-720, 30, `Enemies: ${gameStore.enemies}`, {
       fontSize: "15px",
       fill: "#4DD4CA",
       fontFamily: "Electrolize",
@@ -60,6 +60,8 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
     this.add(this.moneyText);
 
     this.add(this.lifeLabel);
+
+    this.add(this.enemyText);
 
     // Add the container to the scene
     //this.setSize(200, 50);
