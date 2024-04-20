@@ -17,6 +17,21 @@ export class ScoreBoard extends Phaser.GameObjects.Container {
       },
     });
 
+    // Create volume up icon
+    this.volume = scene.add.image(650,38,'volume_max').setScale(0.03).setInteractive({cursor:'pointer'})
+    let isVolumeSwitch = true;
+
+    this.volume.on('pointerdown',() => {
+      if (isVolumeSwitch) {
+        this.volume.setTexture('volume_mute');
+        this.scene.sound.mute = true
+    } else {
+       this.volume.setTexture('volume_max');
+       this.scene.sound.mute = !this.scene.sound.mute
+    }
+    isVolumeSwitch = !isVolumeSwitch;
+    })
+
     // Create text objects to display lives and money
     this.moneyText = scene.add.text(0, 30, `MONEY: $${gameStore.money}`, {
       fontSize: "15px",

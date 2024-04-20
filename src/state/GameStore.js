@@ -6,7 +6,7 @@ configure({
 });
 
 class GameStore {
-  @observable money = 5200;
+  @observable money = 1500;
   @observable enemies = 0;
   lives = 3;
   life_bar = 100;
@@ -19,7 +19,7 @@ class GameStore {
 
   // Method to reset all data to original values
   resetData() {
-    this.money = 5200;
+    this.money = 1500;
     this.enemies = 0;
     this.lives = 3;
     this.life_bar = 100;
