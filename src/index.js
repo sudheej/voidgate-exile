@@ -12,11 +12,15 @@ import enemy_list from "./assets/entities/enemys.json";
 import weaponPickup from "./assets/audio/weapon_pickup.ogg";
 import textAppear from "./assets/audio/text_appear.ogg";
 import explosion from "./assets/audio/explosion.ogg";
+import bgm from "./assets/audio/password-infinity-123276.ogg";
 import weaponPlace from "./assets/audio/weapon_place.ogg";
 import hurt from "./assets/audio/hurt.ogg";
 import Audio from "./utilities/Audio";
 import blue from "./assets/effects/blue.png";
 import flarePng from "./assets/effects/flares.png";
+import miana from "./assets/characters/miana.png";
+import volume_max from "./assets/icons/volume-max.svg"
+import volume_mute from "./assets/icons/volume-mute.svg"
 import flareJson from "./assets/effects/flares.json";
 import { ScoreBoard } from "./components/ScoreBoard";
 import Wave from "./components/Wave";
@@ -30,6 +34,7 @@ const AUDIOS = [
   { name: "_aud_weapon_place", src: weaponPlace },
   { name: "_aud_hurt", src: hurt },
   { name: "_aud_text_appear", src: textAppear },
+  { name: "_aud_bgm", src: bgm },
 ];
 
 const MAP_WIDTH = 300;
@@ -71,7 +76,11 @@ class Main extends Phaser.Scene {
   preload() {
     this.audio.preload(AUDIOS);
     this.load.image("spark", blue);
+    this.load.image("miana", miana);
+    this.load.image("volume_max", volume_max);
+    this.load.image("volume_mute", volume_mute);
     this.load.atlas("flares", flarePng, flareJson);
+    
   }
 
   create() {
@@ -96,6 +105,13 @@ class Main extends Phaser.Scene {
     });
 
     this.audio.create(AUDIOS);
+
+    this.audio.play("_aud_bgm",{loop:true});
+
+    var miana = this.add.image(400, 300, "miana");
+    miana.setScale(0.35);
+    miana.setX(780);
+    miana.setY(620);
 
     const scoreBoard = new ScoreBoard(this);
 
@@ -133,6 +149,7 @@ class Main extends Phaser.Scene {
       gameStore.enemies = this.wave.currentEnemies.length;
       this.text.setText(`FPS: ${fps} Memory: ${memory} MB`);
     } else {
+      this.audio.stop("_aud_bgm")
       this.wave.resetWave();
     }
   }
@@ -145,6 +162,7 @@ class GameOverScene extends Phaser.Scene {
 
   create() {
     this.cameras.main.fadeIn(1000, 0, 0, 0);
+
 
     const { width, height } = this.game.canvas;
 

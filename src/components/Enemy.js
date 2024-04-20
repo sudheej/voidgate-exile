@@ -121,7 +121,7 @@ export default class Enemy {
             emitting: true,
           }
         );
-        this.scene.audio.play("_aud_explosion");
+        //this.scene.audio.play("_aud_explosion");
         enemyShape ? emitter.explode() : "";
       }
 

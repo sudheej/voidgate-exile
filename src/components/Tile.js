@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Helper from "../utilities/Helper";
 
 //const TILE_COLOR = 0x80dfff;
+//#D8FCFE
 const TILE_COLOR = 0x4dd4ca;
 const PATH_COLOR = 0x000000;
 const START_PATH_TOP_GRADIENT_COLORS = [0x7cfc00, 0xadff2f, 0x000000, 0x000000];
